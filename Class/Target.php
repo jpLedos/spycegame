@@ -102,8 +102,4 @@ class Target
 
         return $this;
     }
-
-
-    
-
 }

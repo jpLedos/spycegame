@@ -25,7 +25,7 @@ $countryManager = new CountryManager(); // Création d'un objet'
     {
         $country = $countryManager->getCountry($target->getId())->fetchObject('Country'); 
     ?>
-        <tr class="  <?= !$target->getIsDead() ? 'bg-success' : 'bg-danger barre'  ?>">
+        <tr class="  <?= !$target->getIsDead() ? 'bg-success' : 'bg-danger'  ?>">
         <th scope="row"><?=  $target->getId(); ?></th>   
                 <td><?=  htmlspecialchars($target->getLastname()); ?></td>
                 <td> <?= htmlspecialchars($target->getFirstname());  ?></td>

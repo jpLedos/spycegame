@@ -11,8 +11,13 @@ if (isset($_GET['entity'])) {
         case 'agents':
             require('Router/AgentRouter.php');
             break;
-        
+
+        case 'contacts':
+            require('Router/ContactRouter.php');
+            break;
+            
         default: 
+        echo('defaut entity');
         listMission();
          
     }
