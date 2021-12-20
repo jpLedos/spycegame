@@ -15,15 +15,15 @@ $listCountries = $countryManager->getCountries();// Appel d'une fonction de cet 
         <table class="table bg-light mx-5" style="width: 80%;">
             <tr>
                 <th><label for="lastname">Nom</label></th>
-                <td><input  type = "text" id="lastname" name="lastname"  placeholder ="entrez le nom"></td>
+                <td><input  type = "text" id="lastname" name="lastname"  placeholder ="entrez le nom" required></td>
             </tr>
             <tr>
                 <th><label for="firstname">Prenom</th>
-                <td><input type="text" id ="firstname" name="firstname" placeholder ="entrez le prénom""></td>
+                <td><input type="text" id ="firstname" name="firstname" placeholder ="entrez le prénom"" required></td>
             </tr>
             <tr>
                 <th><label for="code">Code</th>
-                <td><input type="text" id ="code" name="code" placeholder ="entrez le code"></td>
+                <td><input type="text" id ="code" name="code" placeholder ="entrez le code" required></td>
             </tr>
             <tr>
                 <th><label for="countryId" >Pays</th>
@@ -41,7 +41,7 @@ $listCountries = $countryManager->getCountries();// Appel d'une fonction de cet 
             </tr>
             <tr>
                 <th><label for="dateOfBirth" >né(e) en</label></th>
-                <td><input type = "date" id="dateOfBirth" name="dateOfBirth"> 
+                <td><input type = "date" id="dateOfBirth" name="dateOfBirth" required> 
                 </td>
             </tr>
 

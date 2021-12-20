@@ -3,11 +3,11 @@
 class Agent  
 {  
     private INT $id;
-    private string $firstname;
-    private string $lastname;
-    private  $dateOfBirth;
+    private string $title;
+    private string $description;
     private string $code;
     private int $countryId;
+    
     private bool $isDead;
  
     

@@ -1,4 +1,4 @@
-<?php $title = 'Les Contacts'; ?>
+<?php $title = 'Les contacts'; ?>
         
 <?php 
 ob_start();       
@@ -23,7 +23,8 @@ $countryManager = new CountryManager(); // Création d'un objet'
     <?php
     while  ($Contact = $listContacts->fetchObject('Contact'))
     {
-        $country = $countryManager->getCountry($Contact->getId())->fetchObject('Country'); 
+        $showCountry = $countryManager->getCountry($Contact->getCountryId());// Appel d'une fonction de cet objet
+        $country = $showCountry->fetchObject('Country');
     ?>
         <tr class="  <?= !$Contact->getIsDead() ? 'bg-success' : 'bg-danger'  ?>">
         <th scope="row"><?=  $Contact->getId(); ?></th>   
@@ -43,7 +44,7 @@ $countryManager = new CountryManager(); // Création d'un objet'
 </table>
 
 <ul class="mt-5">
-    <li><a href=<?= '?entity=contacts&action=new' ?>>Creer un nouveau contact</a></li>
+    <li><a href=<?= '?entity=contacts&action=new' ?>>Creer nouveau contact</a></li>
 </ul> 
 
 <?php $content = ob_get_clean(); ?>

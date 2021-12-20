@@ -115,4 +115,31 @@ ALTER TABLE missions ADD CONSTRAINT FK_country_id FOREIGN KEY (country_id) REFER
 ALTER TABLE missions ADD CONSTRAINT FK_type_id FOREIGN KEY (type_id) REFERENCES types(id);
 ALTER TABLE hidaways ADD CONSTRAINT FK_hidaway_type_id FOREIGN KEY (hidawaystype_id) REFERENCES hidaway_types(id);
 
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `username` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL
+) CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci`  ENGINE=InnoDB; 
+
+
+
+
+
+CREATE TABLE agents_specialities (
+    agentId INT(11) NOT NULL,
+    specialityId INT(11) NOT NULL,
+    PRIMARY KEY (agentId, specialityId),
+    FOREIGN KEY (agentId) REFERENCES agents(id),
+    FOREIGN KEY (specialityId) REFERENCES specialities(id)
+);
+
+
+CREATE TABLE missions_targets (
+    agentId INT(11) NOT NULL,
+    targetId INT(11) NOT NULL,
+    PRIMARY KEY (agentId, targetId),
+    FOREIGN KEY (agentId) REFERENCES agents(id) ON DELETE CASCADE,
+    FOREIGN KEY (targetId) REFERENCES targets(id)ON DELETE CASCADE
+);
 

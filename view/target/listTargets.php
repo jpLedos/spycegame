@@ -23,7 +23,8 @@ $countryManager = new CountryManager(); // Création d'un objet'
     <?php
     while  ($target = $listTargets->fetchObject('Target'))
     {
-        $country = $countryManager->getCountry($target->getId())->fetchObject('Country'); 
+        $showCountry = $countryManager->getCountry($target->getCountryId());// Appel d'une fonction de cet objet
+        $country = $showCountry->fetchObject('Country');
     ?>
         <tr class="  <?= !$target->getIsDead() ? 'bg-success' : 'bg-danger'  ?>">
         <th scope="row"><?=  $target->getId(); ?></th>   

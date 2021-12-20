@@ -1,12 +1,17 @@
-<?php $title = 'Modification cible'; ?>
+<?php $title = 'Modification Contact'; ?>
       
 <?php 
 ob_start();  
 $Contact = $showContact->fetchObject('Contact');
-$countryManager = new CountryManager(); // Création d'un objet'
-$listCountries = $countryManager->getCountries();// Appel d'une fonction de cet objet
+if($Contact) {
+    $countryManager = new CountryManager(); // Création d'un objet'
+    $listCountries = $countryManager->getCountries();// Appel d'une fonction de cet objet
+    $titleh2 = "<h2>Modification de la cible code : ".$Contact->getCode()."</h2>";
+}else {
+    echo('Aucun resultat pour cette requête !');
+    die;
+}
 
-$titleh2 = "<h2>Modification de la cible code : ".$Contact->getCode()."</h2>";
 ?>
 
 <div class="container-fluid m-5">
@@ -63,9 +68,9 @@ $titleh2 = "<h2>Modification de la cible code : ".$Contact->getCode()."</h2>";
 
 
     <ul class="mt-5">
-        <li><a href=<?= '?entity=Contacts&id='.$Contact->getId().'&action=edit' ?>>edit</a></li>
-        <li><a href=<?= '?entity=Contacts&id='.$Contact->getId().'&action=delete' ?>>delete</a></li>
-        <li><a href=<?= '?entity=Contacts' ?>>retour à la liste</a></li>
+        <li><a href=<?= '?entity=contacts&id='.$Contact->getId().'&action=edit' ?>>edit</a></li>
+        <li><a href=<?= '?entity=contacts&id='.$Contact->getId().'&action=delete' ?>>delete</a></li>
+        <li><a href=<?= '?entity=contacts' ?>>retour à la liste</a></li>
     </ul>   
 
 </div>

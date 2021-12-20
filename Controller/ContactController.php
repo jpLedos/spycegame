@@ -43,11 +43,11 @@ function deleteContact(int $id)
 if (isset($_POST['ContactID']) && $_POST['ContactID']<> 0 ) 
 {
     $updatedContact = new Contact(
-        $_POST['firstname'],
-        $_POST['lastname'],
-        $_POST['dateOfBirth'],
-        $_POST['code'], 
-        $_POST['countryId'],   
+        htmlspecialchars($_POST['firstname']),
+        htmlspecialchars($_POST['lastname']),
+        htmlspecialchars($_POST['dateOfBirth']),
+        htmlspecialchars( $_POST['code']), 
+        htmlspecialchars($_POST['countryId']),   
         isset($_POST['isDead'])? 0 : 1
     );
     
@@ -59,17 +59,17 @@ if (isset($_POST['ContactID']) && $_POST['ContactID']<> 0 )
 if (isset($_POST['ContactID']) && $_POST['ContactID']== 0 ) 
 {
     $newContact = new Contact(
-        $_POST['firstname'],
-        $_POST['lastname'],
-        $_POST['dateOfBirth'],
-        $_POST['code'],
-        intval($_POST['countryId']),
+        htmlspecialchars( $_POST['firstname']),
+        htmlspecialchars($_POST['lastname']),
+        htmlspecialchars($_POST['dateOfBirth']),
+        htmlspecialchars( $_POST['code']),
+        htmlspecialchars(intval($_POST['countryId'])),
          0 ); // pour Vivant par defaut
 
     
     $ContactManager = new ContactManager(); // Création d'un objet
     $ContactManager->postContact($newContact);
-    echo('ajouté');
+    
 }
 
 

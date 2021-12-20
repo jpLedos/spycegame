@@ -13,21 +13,29 @@
 <body>
 <H1>LES MISSIONS DU SPYGAME</H1>
     <nav class="navbar navbar-light bg-light">
-        <div  class="text-right">
-                <a href="#">Se déconnecter</a>
-                <a href="#">Se connecter</a>
+        <div  class="text-right mx-3">
+            <?= (isset($_SESSION["ADMIN"]) && $_SESSION["ADMIN"] == "yes") ? 
+            "<a href='?entity=users&action=logout'>Se déconnecter</a>
+            <br><strong class='text-success'>Acces au bask-office</strong>" :
+            "<a href='?entity=users'>Se connecter</a>"  ?>
+
         </div>
     </nav>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid mx-3">
             <a class="btn" href="?entity=missions">Missions</a>
+        <?php if (isset($_SESSION["ADMIN"]) && $_SESSION["ADMIN"] == "yes") {
+        ?>
             <a class="btn" href="?entity=agents">Agents</a>
             <a class="btn" href="?entity=targets">Targets</a>
             <a class="btn" href="?entity=contacts">Contacts</a>
-            <a class="btn" href="?entity=planques">PLanques</a>
-            <a class="btn" href="?entity=specialites">Specialites</a>
-            <a class="btn" href="?entity=statuts">Statuts</a>
+            <a class="btn" href="?entity=hideaways">Planques</a>
+            <a class="btn" href="?entity=specialities">Specialites</a>
+            <a class="btn" href="?entity=types">Type Missions</a>
+        <?php 
+        } 
+        ?>
         </div>
     </nav>
 

@@ -9,12 +9,12 @@ class CountryManager extends Manager
     function getCountries()
     {
         $db = $this->dbConnect();
-        $sql="SELECT DISTINCT  Countries.id, Countries.name,Countries.code
+        $sql="SELECT Countries.id, Countries.name,Countries.code
         FROM Countries 
         ORDER BY countries.name ASC ;";
         $req = $db->prepare($sql);
         $req->execute();
-
+        //echo($sql);
         return $req;
 
     }
@@ -28,7 +28,6 @@ class CountryManager extends Manager
         //echo ("$sql");
         $req = $db->prepare($sql);
         $req->bindValue(1, $id, PDO::PARAM_STR);
-        //$req->setFetchMode(PDO::FETCH_CLASS, 'Target');
         $req->execute();
                 
         return $req;

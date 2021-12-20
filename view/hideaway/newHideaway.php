@@ -1,30 +1,30 @@
 
 <?php 
-$title = 'creation Contact'; 
-$titleh2 = "<h2>Creation un nouveau Contact !</h2>";
+$title = 'Creation Planque'; 
+$titleh2 = "<h2>Creation d'une nouvelle planque.</h2>";
 ob_start();  
 
 $countryManager = new CountryManager(); // Création d'un objet'
 $listCountries = $countryManager->getCountries();// Appel d'une fonction de cet objet
+$hideawayTypeManager = new HydeawayTypeManager(); // Création d'un objet'
+$listhideawayTypes = $hideawayTypeManager->getHideawayTypes();// Appel d'une fonction de cet objet
 ?>
 
 
 <div class="container-fluid m-5 bg-light">
-    <form method="post" action="index.php?entity=contacts">
-        <input id="ContactID" name="ContactID" type="hidden" value="0">
+    <form method="post" action="index.php?entity=hideaways">
+        <input id="HideawayId" name="HideawayId" type="hidden" value="0">
+        
         <table class="table bg-light mx-5" style="width: 80%;">
-            <tr>
-                <th><label for="lastname">Nom</label></th>
-                <td><input  type = "text" id="lastname" name="lastname"  placeholder ="entrez le nom" required></td>
-            </tr>
-            <tr>
-                <th><label for="firstname">Prenom</th>
-                <td><input type="text" id ="firstname" name="firstname" placeholder ="entrez le prénom"" required></td>
-            </tr>
             <tr>
                 <th><label for="code">Code</th>
                 <td><input type="text" id ="code" name="code" placeholder ="entrez le code" required></td>
             </tr>
+            <tr>
+                <th><label for="address">Adresse</label></th>
+                <td><input  type = "text" id="address" name="address"  placeholder ="entrez l'adresse" required></td>
+            </tr>
+
             <tr>
                 <th><label for="countryId" >Pays</th>
                 <td><select id="countryId" name="countryId">
@@ -39,11 +39,22 @@ $listCountries = $countryManager->getCountries();// Appel d'une fonction de cet 
                 ?>    
                 </td>
             </tr>
+
             <tr>
-                <th><label for="dateOfBirth" >né(e) en</label></th>
-                <td><input type = "date" id="dateOfBirth" name="dateOfBirth" required> 
+                <th><label for="hideawayTypeId" >Type</th>
+                <td><select id="hideawayTypeId" name="hideawayTypeId">
+                <?php
+                while  ($hideawayType = $listhideawayTypes->fetchObject('HideawayType'))
+                {?>
+                    <option value="<?= $hideawayType->getId() ?>"
+                    ><?= $hideawayType->getName() ?>
+                    </option>
+                <?php
+                }
+                ?>    
                 </td>
             </tr>
+
 
         </table>
         <button type="submit" name="submit"class="btn btn-primary">Enregistrer</button>
@@ -51,7 +62,7 @@ $listCountries = $countryManager->getCountries();// Appel d'une fonction de cet 
 
   
     <ul class="mt-5">
-        <li><a href=<?= '?entity=contacts' ?>>retour à la liste</a></li>
+        <li><a href=<?= '?entity=hideaways' ?>>retour à la liste</a></li>
     </ul>   
 
 </div>

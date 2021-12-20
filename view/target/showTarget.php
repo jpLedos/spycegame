@@ -3,12 +3,16 @@
 <?php 
 ob_start();  
 $target = $showTarget->fetchObject('Target');
+if($target) {
+    $countryManager = new CountryManager(); // Création d'un objet'
+    $showCountry = $countryManager->getCountry($target->getCountryId());// Appel d'une fonction de cet objet
+    $country = $showCountry->fetchObject('Country');
+    $titleh2 = "<h2>Description de la cible code : ".$target->getCode()."</h2>";
+} else {
+    echo('Aucun resultat pour cette requête');
+    die;
+}
 
-$countryManager = new CountryManager(); // Création d'un objet'
-$showCountry = $countryManager->getCountry($target->getCountryId());// Appel d'une fonction de cet objet
-$country = $showCountry->fetchObject('Country'); 
-
-$titleh2 = "<h2>Description de la cible code : ".$target->getCode()."</h2>";
 ?>
 
 <div class="container-fluid m-5">

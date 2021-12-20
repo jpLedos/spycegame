@@ -14,7 +14,12 @@ function listTargets()
 function showTarget(int $id)
 {
     $targetManager = new TargetManager(); // Création d'un objet
-    $showTarget = $targetManager->getTarget($id); // Appel d'une fonction de cet objet
+    try {
+        $showTarget = $targetManager->getTarget($id); // Appel d'une fonction de cet objet
+    } catch (Exception $e) {
+        echo($e->getMessage());
+    }
+    
     require('view/target/showTarget.php');
 }
 
@@ -43,15 +48,15 @@ function deleteTarget(int $id)
 if (isset($_POST['targetID']) && $_POST['targetID']<> 0 ) 
 {
     $updatedTarget = new Target(
-        $_POST['firstname'],
-        $_POST['lastname'],
-        $_POST['dateOfBirth'],
-        $_POST['code'], 
-        $_POST['countryId'],   
+        htmlspecialchars($_POST['firstname']),
+        htmlspecialchars($_POST['lastname']),
+        htmlspecialchars($_POST['dateOfBirth']),
+        htmlspecialchars($_POST['code']), 
+        htmlspecialchars($_POST['countryId']),   
         isset($_POST['isDead'])? 0 : 1
     );
     
-      var_dump($updatedTarget);
+      
     
     $targetManager = new TargetManager(); // Création d'un objet
     $targetManager->writeTarget($updatedTarget);
@@ -61,11 +66,11 @@ if (isset($_POST['targetID']) && $_POST['targetID']<> 0 )
 if (isset($_POST['targetID']) && $_POST['targetID']== 0 ) 
 {
     $newTarget = new Target(
-        $_POST['firstname'],
-        $_POST['lastname'],
-        $_POST['dateOfBirth'],
-        $_POST['code'],
-        intval($_POST['countryId']),
+        htmlspecialchars($_POST['firstname']),
+        htmlspecialchars($_POST['lastname']),
+        htmlspecialchars($_POST['dateOfBirth']),
+        htmlspecialchars($_POST['code']),
+        htmlspecialchars(intval($_POST['countryId'])),
          0 ); // pour Vivant par defaut
 
     

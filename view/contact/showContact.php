@@ -1,14 +1,18 @@
-<?php $title = 'Detail cible'; ?>
+<?php $title = 'Detail Contact'; ?>
       
 <?php 
 ob_start();  
 $Contact = $showContact->fetchObject('Contact');
+if($Contact) {
+    $countryManager = new CountryManager(); // Création d'un objet'
+    $showCountry = $countryManager->getCountry($Contact->getCountryId());// Appel d'une fonction de cet objet
+    $country = $showCountry->fetchObject('Country');
+    $titleh2 = "<h2>Description de la cible code : ".$Contact->getCode()."</h2>";
+} else {
+    echo('Aucun resultat pour cette requête');
+    die;
+}
 
-$countryManager = new CountryManager(); // Création d'un objet'
-$showCountry = $countryManager->getCountry($Contact->getCountryId());// Appel d'une fonction de cet objet
-$country = $showCountry->fetchObject('Country'); 
-
-$titleh2 = "<h2>Description de la cible code : ".$Contact->getCode()."</h2>";
 ?>
 
 <div class="container-fluid m-5">

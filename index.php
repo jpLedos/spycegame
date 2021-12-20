@@ -1,6 +1,7 @@
 <?php
 require('controller/frontendController.php');
 
+
 if (isset($_GET['entity'])) {
     switch ($_GET['entity']) {
         case 'targets' :
@@ -16,6 +17,24 @@ if (isset($_GET['entity'])) {
             require('Router/ContactRouter.php');
             break;
             
+        case 'specialities':
+            require('Router/specialityRouter.php');
+            break;
+        
+        case 'users':
+            require('Router/userRouter.php');
+            break;
+        
+        case 'types':
+            require('Router/typeRouter.php');
+            break;
+        
+            case 'hideaways':
+            require('Router/hideawayRouter.php');
+            break;
+    
+
+                
         default: 
         echo('defaut entity');
         listMission();

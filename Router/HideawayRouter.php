@@ -1,13 +1,13 @@
 <?php
 
-require_once('Controller/AgentController.php');
+require_once('Controller/HideawayController.php');
 
 if (isset($_GET['action'])) {
     
     switch($_GET['action']) {
         case 'show' : 
             if (isset($_GET['id']) && $_GET['id'] > 0) {               
-                    showAgent($_GET['id']);
+                    showHideaway($_GET['id']);
             } else {
                 echo 'Erreur : aucun identifiant de cible envoyé';
             }           
@@ -16,7 +16,7 @@ if (isset($_GET['action'])) {
         case 'edit' : 
             if (isset($_GET['id']) && $_GET['id'] > 0) {   
                 if (isset($_SESSION["ADMIN"]) && $_SESSION["ADMIN"] == "yes") {                             
-                    editAgent($_GET['id']);
+                    editHideaway($_GET['id']);
                 } else { 
                     echo 'Erreur : Vous n\'avez pas les droits';  
                 }                    
@@ -26,13 +26,13 @@ if (isset($_GET['action'])) {
         break;
 
         case 'new' :         
-            newAgent();          
+            newHideaway();          
         break;
         
         case 'delete' :         
             if (isset($_GET['id']) && $_GET['id'] > 0) { 
                 if (isset($_SESSION["ADMIN"]) && $_SESSION["ADMIN"] == "yes") {                 
-                    deleteAgent($_GET['id']);  
+                    deleteHideaway($_GET['id']);  
                 } else { 
                     echo 'Erreur : Vous n\'avez pas les droits';  
                 }      
@@ -40,23 +40,10 @@ if (isset($_GET['action'])) {
             echo 'Erreur : aucun identifiant de cible envoyé';
         }               
         break;
-
-        case 'specialities' :         
-            if (isset($_GET['id']) && $_GET['id'] > 0) { 
-                if (isset($_SESSION["ADMIN"]) && $_SESSION["ADMIN"] == "yes") {                 
-                    specialities($_GET['id']);  
-                } else { 
-                    echo 'Erreur : Vous n\'avez pas les droits';  
-                }      
-        }   else {
-            echo 'Erreur : aucun identifiant de cible envoyé';
-        }               
-        break;
-
         
         default : 
         try {
-            listAgents(); 
+            listHideaways(); 
         } 
         catch (Exception $e) {
             echo($e->getMessage());
@@ -65,5 +52,5 @@ if (isset($_GET['action'])) {
     }
 
 } else {
-    listAgents(); 
+    listHideaways(); 
 }
