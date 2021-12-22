@@ -18,6 +18,9 @@ class TargetManager extends Manager
 
     function getTarget(int $id)
     {
+        if(!isset($id)){
+            $id=$_GET['id'];
+        }
         $db = $this->dbConnect();
         $sql="SELECT targets.id, targets.lastname,targets.firstname, targets.code, targets.isDead,
         targets.countryId, targets.dateOfBirth
@@ -25,7 +28,7 @@ class TargetManager extends Manager
         WHERE targets.id = ?";
         //echo ("$sql");
         $req = $db->prepare($sql);
-        $req->bindValue(1, $_GET['id'], PDO::PARAM_STR);
+        $req->bindValue(1, $id, PDO::PARAM_STR);
         //$req->setFetchMode(PDO::FETCH_CLASS, 'Target');
         $req->execute();
                 

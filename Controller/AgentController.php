@@ -30,7 +30,7 @@ function deleteAgent(int $id)
 {
     $AgentManager = new AgentManager(); // Création d'un objet
     $deleteAgent = $AgentManager->deleteAgent($id); // Appel d'une fonction de cet objet
-    header("Location: ?entity=agents");
+    header("Location: ?entity=Agents");
 }
 
 // prepare l'update d'un agent ___________________________________________________
@@ -39,7 +39,6 @@ function editAgent(int $Id)
     $AgentManager = new AgentManager(); // Création d'un objet
     $showAgent = $AgentManager->getAgent($Id); // Appel d'une fonction de cet objet
     $agentSpecialities = $AgentManager->getSpecialitiesFromAgent($Id);
-    //var_dump($_SERVER);
     require('view/Agent/editAgent.php');
 }
 
@@ -107,7 +106,7 @@ if (isset($_POST['specialityUpdated']) )
     $AgentManager->purgeAgentSpecialities($_POST['AgentId']); // on efface tous
     //$AgentManager->updateSpeciality($newAgent);
     foreach($_POST as $post => $value) {
-        if(substr($post,0,12)==="speToBeAdded") {
+        if(substr($post,0,9)==="toBeAdded") {
             $AgentManager->addSpecialityToAgent($_POST['AgentId'],$value); 
         }
     } ;

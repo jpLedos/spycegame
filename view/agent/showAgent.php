@@ -49,7 +49,6 @@ if($agent) {
             <td>
                 <ul>
                 <?php
-                    
                     while ($agentSpeciality = $agentSpecialities->fetch(PDO::FETCH_ASSOC)) {
                     echo("<li>".$agentSpeciality['speciality']."</li>");
                     } 

@@ -29,11 +29,13 @@ if (isset($_GET['entity'])) {
             require('Router/typeRouter.php');
             break;
         
-            case 'hideaways':
-            require('Router/hideawayRouter.php');
-            break;
+        case 'hideaways':
+        require('Router/hideawayRouter.php');
+        break;
     
-
+        case 'missions':
+            require('Router/missionRouter.php');
+            break;
                 
         default: 
         echo('defaut entity');

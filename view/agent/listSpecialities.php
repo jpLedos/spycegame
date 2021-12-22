@@ -41,7 +41,7 @@ if($agent) {
                     <input type="checkbox"
                             value=<?=  $Speciality->getId(); ?>
                             id=<?=  $Speciality->getId(); ?>
-                            name="speToBeAdded.<?=  $Speciality->getId(); ?>.""
+                            name="toBeAdded.<?=  $Speciality->getId(); ?>."
                             <?= !getIsAgentSpeciality($_GET['id'],$Speciality->getId()) ? 'checked':''  ?>checked />
                 </td>
             </tr>

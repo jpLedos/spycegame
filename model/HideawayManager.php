@@ -18,6 +18,9 @@ class HideawayManager extends Manager
 
     function getHideaway(int $id)
     {
+        if(!isset($id)){
+            $id=$_GET['id'];
+        }
         $db = $this->dbConnect();
         $sql="SELECT Hideaways.id, Hideaways.code,Hideaways.address, 
         Hideaways.hideawayTypeId , Hideaways.countryId
@@ -25,7 +28,7 @@ class HideawayManager extends Manager
         WHERE Hideaways.id = ?";
         //echo ("$sql");
         $req = $db->prepare($sql);
-        $req->bindValue(1, $_GET['id'], PDO::PARAM_STR);
+        $req->bindValue(1, $id, PDO::PARAM_STR);
         //$req->setFetchMode(PDO::FETCH_CLASS, 'Hideaway');
         $req->execute();
                 

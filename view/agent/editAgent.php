@@ -83,7 +83,6 @@ if($Agent) {
 
 
     <ul class="mt-5">
-        <li><a href=<?= '?entity=agents&id='.$Agent->getId().'&action=edit' ?>>edit</a></li>
         <li><a href=<?= '?entity=agents&id='.$Agent->getId().'&action=delete' ?>>delete</a></li>
         <li><a href=<?= '?entity=agents' ?>>retour à la liste</a></li>
     </ul>   

@@ -19,15 +19,16 @@ class AgentManager extends Manager
 
     function getAgent(int $id)
     {
+        if(!isset($id)){
+            $id= $_GET['id'];
+        }
         $db = $this->dbConnect();
         $sql="SELECT Agents.id, Agents.lastname,Agents.firstname, Agents.code, Agents.isDead,
         Agents.countryId, Agents.dateOfBirth
         FROM Agents
         WHERE Agents.id = ?";
-    
         $req = $db->prepare($sql);
-        $req->bindValue(1, $_GET['id'], PDO::PARAM_STR);
-        //$req->setFetchMode(PDO::FETCH_CLASS, 'Agent');
+        $req->bindValue(1, $id, PDO::PARAM_STR);
         $req->execute();
                 
         return $req;
@@ -95,7 +96,6 @@ class AgentManager extends Manager
         $req->execute();
 
         return $req;
-
     }
 
     function isAgentSpeciality($agentId, $specialityId)

@@ -5,7 +5,7 @@ require_once('Class/type.php');
 
 class typeManager extends Manager
 {
-    function gettypes()
+    function getTypes()
     {
         $db = $this->dbConnect();
         $sql="SELECT types.id, types.type
@@ -15,15 +15,18 @@ class typeManager extends Manager
         return $req;
     }
 
-    function gettype(int $id)
+    function getType(int $id)
     {
         $db = $this->dbConnect();
+        if(!isset($id)){
+            $id=$_GET['id'];
+        }
         $sql="SELECT types.id, types.type
         FROM types
         WHERE types.id = ?";
         //echo ("$sql");
         $req = $db->prepare($sql);
-        $req->bindValue(1, $_GET['id'], PDO::PARAM_STR);
+        $req->bindValue(1, $id, PDO::PARAM_STR);
         //$req->setFetchMode(PDO::FETCH_CLASS, 'type');
         $req->execute();
                 

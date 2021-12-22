@@ -18,6 +18,9 @@ class ContactManager extends Manager
 
     function getContact(int $id)
     {
+        if(!isset($id)){
+            $id=$_GET['id'];
+        }
         $db = $this->dbConnect();
         $sql="SELECT Contacts.id, Contacts.lastname,Contacts.firstname, Contacts.code, Contacts.isDead,
         Contacts.countryId, Contacts.dateOfBirth
@@ -25,7 +28,7 @@ class ContactManager extends Manager
         WHERE Contacts.id = ?";
         //echo ("$sql");
         $req = $db->prepare($sql);
-        $req->bindValue(1, $_GET['id'], PDO::PARAM_STR);
+        $req->bindValue(1, $id, PDO::PARAM_STR);
         //$req->setFetchMode(PDO::FETCH_CLASS, 'Contact');
         $req->execute();
                 

@@ -16,11 +16,17 @@ h1 {
 
 h2{
     margin: 10px 0 20px 80px;
+    color: rgb(250, 9, 9);
 }
 
 .edit {
     background-image: url("./asset/image/edition.png");
     width: 60px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(247, 22, 22, 0.8);
     text-align: center;
+}
+
+.bg-success {
+    background-color: rgb(96, 238, 103);
+    color:white;
 }

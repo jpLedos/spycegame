@@ -71,4 +71,11 @@ class Hideaway
 
         return $this;
     }
+
+    public function getFullName() :string
+    {
+        return $this->code." ".$this->address;
+    }
+    
+
 }

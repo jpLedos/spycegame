@@ -6,6 +6,12 @@ class Statut
     private int  $id;
     private string $statut;
 
+    public function __construct( $statut=null) {
+
+        if (func_get_args() != null) {
+            $this->statut = $statut;
+        }
+    }
 
     public function getId(): ?int
     {
@@ -13,7 +19,7 @@ class Statut
     }
  
     
-    public function geStatut() : string 
+    public function getStatut() : string 
     {
         return $this->statut;
     }

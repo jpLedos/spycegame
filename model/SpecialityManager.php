@@ -17,13 +17,16 @@ class SpecialityManager extends Manager
 
     function getSpeciality(int $id)
     {
+        if(!isset($id)){
+            $id = $_GET['id'];
+        }
         $db = $this->dbConnect();
         $sql="SELECT Specialities.id, Specialities.speciality
         FROM Specialities
         WHERE Specialities.id = ?";
         //echo ("$sql");
         $req = $db->prepare($sql);
-        $req->bindValue(1, $_GET['id'], PDO::PARAM_STR);
+        $req->bindValue(1, $id, PDO::PARAM_STR);
         //$req->setFetchMode(PDO::FETCH_CLASS, 'Speciality');
         $req->execute();
                 

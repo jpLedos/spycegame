@@ -135,11 +135,45 @@ CREATE TABLE agents_specialities (
 );
 
 
+
 CREATE TABLE missions_targets (
-    agentId INT(11) NOT NULL,
+    missionId INT(11) NOT NULL,
     targetId INT(11) NOT NULL,
-    PRIMARY KEY (agentId, targetId),
-    FOREIGN KEY (agentId) REFERENCES agents(id) ON DELETE CASCADE,
-    FOREIGN KEY (targetId) REFERENCES targets(id)ON DELETE CASCADE
+    PRIMARY KEY (missionId, targetId)
+)
+
+
+
+CREATE TABLE missions_contacts (
+    missionId INT(11) NOT NULL,
+    contactId INT(11) NOT NULL,
+    PRIMARY KEY (missionId, contactId)
 );
 
+ALTER TABLE missions_contacts 
+    ADD  FOREIGN KEY (missionId) REFERENCES missions(id) ON DELETE CASCADE,
+    ADD  FOREIGN KEY (contactId) REFERENCES contacts(id)ON DELETE CASCADE
+;
+
+CREATE TABLE missions_agents (
+    missionId INT(11) NOT NULL,
+    agentId INT(11) NOT NULL,
+    PRIMARY KEY (missionId, agentId)
+);
+
+
+ALTER TABLE missions_agents 
+    ADD  FOREIGN KEY (missionId) REFERENCES missions(id) ON DELETE CASCADE,
+    ADD  FOREIGN KEY (agentId) REFERENCES agents(id)ON DELETE CASCADE
+
+
+    CREATE TABLE missions_hideaways (
+    missionId INT(11) NOT NULL,
+    hideawayId INT(11) NOT NULL,
+    PRIMARY KEY (missionId, hideawayId)
+);
+
+
+ALTER TABLE missions_hideaways 
+    ADD  FOREIGN KEY (missionId) REFERENCES missions(id) ON DELETE CASCADE,
+    ADD  FOREIGN KEY (hideawayId) REFERENCES hideaways(id)ON DELETE CASCADE

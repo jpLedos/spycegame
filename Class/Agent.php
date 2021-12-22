@@ -106,7 +106,7 @@ class Agent
     public function getFullName() :string
     {
     
-        return $this->firstname." ".$this->lastname;
+        return $this->firstname." ".$this->lastname." Code : ".$this->code;
     }
     
 }
