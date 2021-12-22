@@ -8,13 +8,15 @@ $countryManager = new CountryManager(); // Création d'un objet'
 $listCountries = $countryManager->getCountries();// Appel d'une fonction de cet objet
 $hideawayTypeManager = new HydeawayTypeManager(); // Création d'un objet'
 $listhideawayTypes = $hideawayTypeManager->getHideawayTypes();// Appel d'une fonction de cet objet
+$returnToUrl = $_SERVER['HTTP_REFERER'];
 ?>
 
 
 <div class="container-fluid m-5 bg-light">
     <form method="post" action="index.php?entity=hideaways">
         <input id="HideawayId" name="HideawayId" type="hidden" value="0">
-        
+        <input id="returnToUrl" name="returnToUrl" type="hidden" value=<?=$returnToUrl ?>>
+
         <table class="table bg-light mx-5" style="width: 80%;">
             <tr>
                 <th><label for="code">Code</th>

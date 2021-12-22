@@ -56,7 +56,7 @@ class AgentManager extends Manager
 
     function postAgent($newAgent)
     {
-        $db = dbConnect();
+        $db = $this->dbConnect();
         $sql=  "INSERT INTO Agents ( lastname, firstname,code, countryId, isDead, dateOfBirth)
         Value ('".
         $newAgent->getLastName()."','".
@@ -74,7 +74,7 @@ class AgentManager extends Manager
 
     function deleteAgent($id)
     {
-        $db = dbConnect();
+        $db = $this->dbConnect();
         $sql="DELETE FROM Agents WHERE id = ".$id.";";
 
         $req = $db->prepare($sql);
@@ -86,7 +86,7 @@ class AgentManager extends Manager
     //retourne en texte les specialités de l'agent
     function getSpecialitiesFromAgent($agentId)
     {
-        $db = dbConnect();
+        $db = $this->dbConnect();
         $sql="SELECT specialityId, speciality  FROM agents_specialities
         INNER JOIN specialities
         ON agents_specialities.specialityId = specialities.id
@@ -100,7 +100,7 @@ class AgentManager extends Manager
 
     function isAgentSpeciality($agentId, $specialityId)
     {
-        $db=dbConnect();
+        $db=$this->dbConnect();
         $sql="SELECT specialityId FROM agents_specialities
         WHERE specialityId = ".$specialityId." AND
                 agentId= ".$agentId;
@@ -114,7 +114,7 @@ class AgentManager extends Manager
 
     function purgeAgentSpecialities($agentId)
     {
-        $db=dbConnect();
+        $db=$this->dbConnect();
         $sql="DELETE FROM agents_specialities
         WHERE agentId = ".$agentId;
         $req = $db->prepare($sql);
@@ -125,7 +125,7 @@ class AgentManager extends Manager
 
     function addSpecialityToAgent($agentId, $specialityId)
     {
-        $db=dbConnect();
+        $db=$this->dbConnect();
         $sql = "INSERT INTO agents_specialities (agentId, specialityId) 
         VALUES (".$agentId.",".$specialityId.");";
         //echo($sql);
@@ -133,6 +133,5 @@ class AgentManager extends Manager
         $req->execute();
 
         return $req;
-
     }
 }

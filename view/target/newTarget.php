@@ -6,12 +6,14 @@ ob_start();
 
 $countryManager = new CountryManager(); // Création d'un objet'
 $listCountries = $countryManager->getCountries();// Appel d'une fonction de cet objet
+$returnToUrl = $_SERVER['HTTP_REFERER'];
 ?>
 
 
 <div class="container-fluid m-5 bg-light">
     <form method="post" action="index.php?entity=targets">
         <input id="targetID" name="targetID" type="hidden" value="0">
+        <input id="returnToUrl" name="returnToUrl" type="hidden" value=<?=$returnToUrl ?>>
         <table class="table bg-light mx-5" style="width: 80%;">
             <tr>
                 <th><label for="lastname">Nom</label></th>
@@ -46,7 +48,7 @@ $listCountries = $countryManager->getCountries();// Appel d'une fonction de cet 
             </tr>
 
         </table>
-        <button type="submit" name="submit"class="btn btn-primary">Enregistrer</button>
+        <button type="submit" name="targetAdd"class="btn btn-primary">Enregistrer</button>
     </form>
 
   

@@ -2,6 +2,7 @@
       
 <?php 
 ob_start();  
+$returnToUrl = $_SERVER['HTTP_REFERER'];
 $Hideaway = $showHideaway->fetchObject('Hideaway');
 if($Hideaway) {
     $countryManager = new CountryManager(); // Création d'un objet'
@@ -18,6 +19,7 @@ if($Hideaway) {
 <div class="container-fluid m-5">
     <form method="post" action="index.php?entity=hideaways">
         <input id="HideawayId" name="HideawayId" type="hidden" value="<?=  $Hideaway->getId(); ?>">
+        <input id="returnToUrl" name="returnToUrl" type="hidden" value=<?=$returnToUrl ?>>
         <table class="table bg-light mx-5" style="width: 80%;">
             <tr>
                 <th>N°</th>

@@ -1,10 +1,10 @@
-<?php $title = 'Agents de la mission'; ?>
+<?php $title = 'Contacts de la mission'; ?>
         
 <?php 
 ob_start();    
 $mission = $showMission->fetchObject('mission');
 if($mission) {
-    $titleh2 = "<h2>Agents de la mission ".$mission->getCode()." ".$mission->getTitle()."</h2>";
+    $titleh2 = "<h2>Contacts de la mission ".$mission->getCode()." ".$mission->getTitle()."</h2>";
 
     $countryManager = new CountryManager(); // Création d'un objet'
     $showCountry = $countryManager->getCountry($mission->getCountryId());// Appel d'une fonction de cet objet
@@ -25,41 +25,41 @@ if($mission) {
             <thead>
                 <tr class="bg-light">
                     <th>N°</span>   
-                    <th class="" >Agents</th>
+                    <th class="" >Contacts</th>
                     <th></th>
                 </tr>
             </thead>
             <?php
-            while  ($agent = $listAgents->fetchObject('Agent'))
+            while  ($contact = $listContacts->fetchObject('Contact'))
             {
             ?>
             <tr class=''>
-                <th scope="row"><?=  $agent->getId(); ?></th>   
+                <th scope="row"><?=  $contact->getId(); ?></th>           
                 <td>
-                    <label for=<?=  $agent->getId(); ?>>
-                        <?= htmlspecialchars($agent->getFullname()); ?>
+                    <label for=<?=  $contact->getId(); ?>>
+                        <?= htmlspecialchars($contact->getFullname()); ?>
                     </label>
                 </td>
                 <td>
                     <input 
                         type="checkbox"
-                        value=<?=  $agent->getId(); ?>
-                        id=<?=  $agent->getId(); ?>
-                        name="toBeAdded.<?= $agent->getId(); ?>."
-                        name="toBeAdded.<?= $agent->getId(); ?>."
-                        <?= !getIsMissionAgent($_GET['id'],$agent->getId()) ? 'checked':''  ?>checked />
+                        value=<?=  $contact->getId(); ?>
+                        id=<?=  $contact->getId(); ?>
+                        name="toBeAdded.<?= $contact->getId(); ?>."
+                        name="toBeAdded.<?= $contact->getId(); ?>."
+                        <?= !getIsMissionContact($_GET['id'],$contact->getId()) ? 'checked':''  ?>checked />
                 </td>
             </tr>
             <?php
             }
 
-            $listAgents->closeCursor();
+            $listContacts->closeCursor();
             ?>
         </table>  
         <ul class="mt-5">
-            <li><a href=<?= '?entity=agents&action=new' ?>>Creer une nouvel Agent</a></li>
+            <li><a href=<?= '?entity=contacts&action=new' ?>>Creer une nouvel Contact</a></li>
         </ul>   
-        <button type="submit" name="agentsUpdated" class="btn btn-primary">Enregistrer</button>
+        <button type="submit" name="contactsUpdated" class="btn btn-primary">Enregistrer</button>
     </form>
 </div>
 

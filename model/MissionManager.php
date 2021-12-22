@@ -61,7 +61,7 @@ class MissionManager extends Manager
 
     function postMission($newMission)
     {
-        $db = dbConnect();
+        $db = $this->dbConnect();
         $sql=  "INSERT INTO Missions ( lastname, firstname,code, countryId, isDead, dateOfBirth)
         Value ('".
         $newMission->getLastName()."','".
@@ -79,7 +79,7 @@ class MissionManager extends Manager
 
     function deleteMission($id)
     {
-        $db = dbConnect();
+        $db = $this->dbConnect();
         $sql="DELETE FROM Missions WHERE id = ".$id.";";
 
         $req = $db->prepare($sql);
@@ -92,7 +92,7 @@ class MissionManager extends Manager
     //return in  text mission's agents
     function getAgentsFromMission($missionId)
     {
-        $db = dbConnect();
+        $db = $this->dbConnect();
         $sql="SELECT agentId FROM missions_agents
         WHERE missionId = ".$missionId;
 
@@ -104,10 +104,10 @@ class MissionManager extends Manager
 
     function isMissionAgent($missionId, $agentId)
     {
-        $db=dbConnect();
+        $db=$this->dbConnect();
         $sql="SELECT agentId FROM missions_agents
         WHERE  missionId = ".$missionId." AND
-               agentId= ".$agentId.";";
+            agentId= ".$agentId.";";
 
         var_dump($sql);
         
@@ -119,7 +119,7 @@ class MissionManager extends Manager
 
     function purgeMissionAgents($missionId)
     {
-        $db=dbConnect();
+        $db=$this->dbConnect();
         $sql="DELETE FROM missions_agents
         WHERE missionId = ".$missionId;
         $req = $db->prepare($sql);
@@ -130,7 +130,7 @@ class MissionManager extends Manager
 
     function addAgentToMission($missionId, $agentId)
     {
-        $db=dbConnect();
+        $db=$this->dbConnect();
         $sql = "INSERT INTO missions_agents (missionId, agentId) 
         VALUES (".$missionId.",".$agentId.");";
         //echo($sql);
@@ -143,11 +143,13 @@ class MissionManager extends Manager
 // ________________end of Agents management___________________________________
 
 
-// Cibles management
-    //return in  text mission's cibles
+
+
+//_____________________ Targets management __________________________________________
+    //return in  text mission's targets
     function getTargetsFromMission($missionId)
     {
-        $db = dbConnect();
+        $db = $this->dbConnect();
         $sql="SELECT targetId FROM missions_targets
         WHERE missionId = ".$missionId;
 
@@ -157,15 +159,52 @@ class MissionManager extends Manager
         return $req;
     }
 
+    function isMissionTarget($missionId, $targetId)
+    {
+        $db=$this->dbConnect();
+        $sql="SELECT targetId FROM missions_targets
+        WHERE  missionId = ".$missionId." AND
+            targetId= ".$targetId.";";
 
-// ________________end of Cibles management___________________________________
+        var_dump($sql);
+        
+        $req = $db->prepare($sql);
+        $req->execute();
+
+        return $req->fetch();
+    }
+
+    function purgeMissionTargets($missionId)
+    {
+        $db=$this->dbConnect();
+        $sql="DELETE FROM missions_targets
+        WHERE missionId = ".$missionId;
+        $req = $db->prepare($sql);
+        $req->execute();
+
+        return $req;
+    }
+
+    function addTargetToMission($missionId, $targetId)
+    {
+        $db=$this->dbConnect();
+        $sql = "INSERT INTO missions_targets (missionId, targetId) 
+        VALUES (".$missionId.",".$targetId.");";
+        //echo($sql);
+        $req = $db->prepare($sql);
+        $req->execute();
+
+        return $req;
+    }
+
+// ________________end of Targets management___________________________________
 
 
-// _______________Contacts management________________________________________
-    //return in  text mission's cibles
+//_____________________ Contacts management __________________________________________
+    //return in  text mission's contacts
     function getContactsFromMission($missionId)
     {
-        $db = dbConnect();
+        $db = $this->dbConnect();
         $sql="SELECT contactId FROM missions_contacts
         WHERE missionId = ".$missionId;
 
@@ -175,16 +214,56 @@ class MissionManager extends Manager
         return $req;
     }
 
+    function isMissionContact($missionId, $contactId)
+    {
+        $db=$this->dbConnect();
+        $sql="SELECT contactId FROM missions_contacts
+        WHERE  missionId = ".$missionId." AND
+            contactId= ".$contactId.";";
 
-// ________________end of contact management___________________________________
+        var_dump($sql);
+        
+        $req = $db->prepare($sql);
+        $req->execute();
+
+        return $req->fetch();
+    }
+
+    function purgeMissionContacts($missionId)
+    {
+        $db=$this->dbConnect();
+        $sql="DELETE FROM missions_contacts
+        WHERE missionId = ".$missionId;
+        $req = $db->prepare($sql);
+        $req->execute();
+
+        return $req;
+    }
+
+    function addContactToMission($missionId, $contactId)
+    {
+        $db=$this->dbConnect();
+        $sql = "INSERT INTO missions_contacts (missionId, contactId) 
+        VALUES (".$missionId.",".$contactId.");";
+        //echo($sql);
+        $req = $db->prepare($sql);
+        $req->execute();
+
+        return $req;
+    }
+
+// ________________end of Contacts management___________________________________
 
 
-// ________________Hideaways management________________________________________
-    //return in  text mission's cibles
+
+
+
+//_____________________ hideaways management __________________________________________
+    //return in  text mission's hideaways
     function getHideawaysFromMission($missionId)
     {
-        $db = dbConnect();
-        $sql="SELECT hideawayId FROM missions_Hideaways
+        $db = $this->dbConnect();
+        $sql="SELECT hideawayId FROM missions_hideaways
         WHERE missionId = ".$missionId;
 
         $req = $db->prepare($sql);
@@ -193,32 +272,44 @@ class MissionManager extends Manager
         return $req;
     }
 
-
-// ________________end of contact management___________________________________
-
-
-
-
-
-    function getMissionStatut($statutId)
+    function isMissionHideaway($missionId, $hideawayId)
     {
-        $db=dbConnect();
-        $sql = "SELECT id,statut from statuts WHERE id = ".$statutId.";";
-        $req = $db->prepare($sql);
-        $req->execute();
-        $statut = $req->fetch(PDO::FETCH_ASSOC);
+        $db=$this->dbConnect();
+        $sql="SELECT hideawayId FROM missions_hideaways
+        WHERE  missionId = ".$missionId." AND
+            hideawayId= ".$hideawayId.";";
+
+        var_dump($sql);
         
-        return $statut;
-
-    }
-
-    function getStatuts()
-    {
-        $db=dbConnect();
-        $sql = "SELECT id,statut from statuts";
         $req = $db->prepare($sql);
         $req->execute();
 
-        return $req;  
+        return $req->fetch();
     }
+
+    function purgeMissionHideaways($missionId)
+    {
+        $db=$this->dbConnect();
+        $sql="DELETE FROM missions_hideaways
+        WHERE missionId = ".$missionId;
+        $req = $db->prepare($sql);
+        $req->execute();
+
+        return $req;
+    }
+
+    function addHideawayToMission($missionId, $hideawayId)
+    {
+        $db=$this->dbConnect();
+        $sql = "INSERT INTO missions_hideaways (missionId, hideawayId) 
+        VALUES (".$missionId.",".$hideawayId.");";
+        //echo($sql);
+        $req = $db->prepare($sql);
+        $req->execute();
+
+        return $req;
+    }
+
+// ________________end of hideaways management___________________________________
+
 }

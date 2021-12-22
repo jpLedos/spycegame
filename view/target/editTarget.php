@@ -2,6 +2,7 @@
       
 <?php 
 ob_start();  
+$returnToUrl = $_SERVER['HTTP_REFERER'];
 $target = $showTarget->fetchObject('Target');
 if($target) {
     $countryManager = new CountryManager(); // Création d'un objet'
@@ -17,6 +18,7 @@ if($target) {
 <div class="container-fluid m-5">
     <form method="post" action="index.php?entity=targets">
         <input id="targetID" name="targetID" type="hidden" value="<?=  $target->getId(); ?>">
+        <input id="returnToUrl" name="returnToUrl" type="hidden" value=<?=$returnToUrl ?>>
         <table class="table bg-light mx-5" style="width: 80%;">
             <tr>
                 <th>N°</th>
@@ -63,7 +65,7 @@ if($target) {
                             name="isDead" <?= $target->getIsDead() ? 'checked':''  ?>checked> (coché = vivant)</td>
             </tr>
         </table>
-        <button type="submit" name="submit"class="btn btn-primary">Enregistrer</button>
+        <button type="submit" name="targetUpdate"class="btn btn-primary">Enregistrer</button>
     </form>
 
 

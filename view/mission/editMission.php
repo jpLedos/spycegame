@@ -7,9 +7,6 @@ $mission = $showMission->fetchObject('mission');
 if($mission) {
     $titleh2 = "<h2>Description de la mission code : ".$mission->getCode()."</h2>";
 
-    $statutManager = new missionManager(); 
-    $listStatuts = $statutManager->getStatuts();
-
     $countryManager = new CountryManager(); // get country from countryId
     $listCountries = $countryManager->getCountries();
  
@@ -18,6 +15,10 @@ if($mission) {
     
     $specialityManager = new SpecialityManager();  // get speciality from specialityId
     $listSpecialities = $specialityManager->getSpecialities();
+
+    $statutManager = new statutManager(); 
+    $listStatuts = $statutManager->getStatuts();
+
 
 } else {
     echo('Aucun resultat pour cette requête !');
@@ -149,6 +150,7 @@ if($mission) {
                     } 
                 ?>
                 </ul>
+                <td><a href="?entity=missions&id=<?=$mission->getId()?>&action=editTargets">Gestion des Cibles</a></td>
             </td>
         </tr>
         <tr>
@@ -165,6 +167,7 @@ if($mission) {
                     } 
                 ?>
                 </ul>
+                <td><a href="?entity=missions&id=<?=$mission->getId()?>&action=editContacts">Gestion des Contacts</a></td>
             </td>
         </tr>
         <tr>
@@ -189,8 +192,8 @@ if($mission) {
                         $showHideaway->closeCursor();
                     } 
                 ?>
-               
                 </ul>
+                <td><a href="?entity=missions&id=<?=$mission->getId()?>&action=editHideaways">Gestion des Planques</a></td>
             </td>
         </tr>
         </table>

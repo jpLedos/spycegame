@@ -41,7 +41,7 @@ function deleteHideaway(int $id)
 
 // traitement d'un post
 
-if (isset($_POST['HideawayId']) && $_POST['HideawayId']<> 0 ) 
+if (isset($_POST['HideawayId']) && $_POST['HideawayId']<> 0 && isset($_POST['hideawayUpdate'])) 
 {
 
     $updatedHideaway = new Hideaway(
@@ -53,11 +53,11 @@ if (isset($_POST['HideawayId']) && $_POST['HideawayId']<> 0 )
 
     $HideawayManager = new HideawayManager(); // Création d'un objet
     $HideawayManager->writeHideaway($updatedHideaway);
-    header("Location: ?entity=hideaways&id=".$_POST['HideawayId']."&action=show");
+    header("Location: ".$_POST['returnToUrl']);
 }
 
 //creation d une planque en bdd
-if (isset($_POST['HideawayId']) && $_POST['HideawayId']== 0 ) 
+if (isset($_POST['HideawayId']) && $_POST['HideawayId']== 0 && isset($_POST['hideawayAdd'])) 
 {
     $newHideaway = new Hideaway(
         htmlspecialchars(htmlspecialchars($_POST['code'])),
@@ -68,4 +68,5 @@ if (isset($_POST['HideawayId']) && $_POST['HideawayId']== 0 )
 
     $HideawayManager = new HideawayManager(); // Création d'un objet
     $HideawayManager->postHideaway($newHideaway);
+    header("Location: ".$_POST['returnToUrl']);
 }

@@ -2,6 +2,7 @@
       
 <?php 
 ob_start();  
+$returnToUrl = $_SERVER['HTTP_REFERER'];
 $Agent = $showAgent->fetchObject('Agent');
 if($Agent) {
     $countryManager = new CountryManager(); // Création d'un objet'
@@ -16,6 +17,7 @@ if($Agent) {
 <div class="container-fluid m-5">
     <form method="post" action="index.php?entity=agents">
         <input id="AgentID" name="AgentID" type="hidden" value="<?=  $Agent->getId(); ?>">
+        <input id="returnToUrl" name="returnToUrl" type="hidden" value=<?=$returnToUrl ?>>
         <table class="table bg-light mx-5" style="width: 80%;">
             <tr>
                 <th>N°</th>

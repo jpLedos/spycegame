@@ -45,7 +45,7 @@ function deleteTarget(int $id)
 
 // traitement d'un post
 
-if (isset($_POST['targetID']) && $_POST['targetID']<> 0 ) 
+if (isset($_POST['targetID']) && $_POST['targetID']<> 0  && isset($_POST['targetUpdate'])) 
 {
     $updatedTarget = new Target(
         htmlspecialchars($_POST['firstname']),
@@ -56,14 +56,12 @@ if (isset($_POST['targetID']) && $_POST['targetID']<> 0 )
         isset($_POST['isDead'])? 0 : 1
     );
     
-      
-    
     $targetManager = new TargetManager(); // Création d'un objet
     $targetManager->writeTarget($updatedTarget);
-    header("Location: ?entity=targets&id=".$_POST['targetID']."&action=show");
+    header("Location: ".$_POST['returnToUrl']);
 }
 
-if (isset($_POST['targetID']) && $_POST['targetID']== 0 ) 
+if (isset($_POST['targetID']) && $_POST['targetID']== 0 && isset($_POST['targetAdd'])) 
 {
     $newTarget = new Target(
         htmlspecialchars($_POST['firstname']),
@@ -73,10 +71,9 @@ if (isset($_POST['targetID']) && $_POST['targetID']== 0 )
         htmlspecialchars(intval($_POST['countryId'])),
          0 ); // pour Vivant par defaut
 
-    
     $targetManager = new TargetManager(); // Création d'un objet
     $targetManager->postTarget($newTarget);
-    echo('ajouté');
+    header("Location: ".$_POST['returnToUrl']);
 }
 
 

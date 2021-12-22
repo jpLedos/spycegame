@@ -58,7 +58,7 @@ class ContactManager extends Manager
 
     function postContact($newContact)
     {
-        $db = dbConnect();
+        $db = $this->dbConnect();
         $sql=  "INSERT INTO Contacts ( lastname, firstname,code, countryId, isDead, dateOfBirth)
         Value ('".
         $newContact->getLastName()."','".
@@ -77,7 +77,7 @@ class ContactManager extends Manager
 
     function deleteContact($id)
     {
-        $db = dbConnect();
+        $db = $this->dbConnect();
         $sql="DELETE FROM Contacts WHERE id = ".$id.";";
 
         $req = $db->prepare($sql);

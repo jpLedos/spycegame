@@ -50,7 +50,7 @@ class SpecialityManager extends Manager
 
     function postSpeciality($newSpeciality)
     {
-        $db = dbConnect();
+        $db = $this->dbConnect();
         $sql=  "INSERT INTO Specialities ( speciality)
         Value ('".
         $newSpeciality->getSpeciality()."');'";
@@ -63,7 +63,7 @@ class SpecialityManager extends Manager
 
     function deleteSpeciality($id)
     {
-        $db = dbConnect();
+        $db = $this->dbConnect();
         $sql="DELETE FROM specialities WHERE id = ".$id.";";
 
         $req = $db->prepare($sql);

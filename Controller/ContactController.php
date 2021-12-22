@@ -40,7 +40,7 @@ function deleteContact(int $id)
 
 // traitement d'un post
 
-if (isset($_POST['ContactID']) && $_POST['ContactID']<> 0 ) 
+if (isset($_POST['ContactID']) && $_POST['ContactID']<> 0  && isset($_POST['contactUpdate']) ) 
 {
     $updatedContact = new Contact(
         htmlspecialchars($_POST['firstname']),
@@ -53,10 +53,10 @@ if (isset($_POST['ContactID']) && $_POST['ContactID']<> 0 )
     
     $ContactManager = new ContactManager(); // Création d'un objet
     $ContactManager->writeContact($updatedContact);
-    header("Location: ?entity=contacts&id=".$_POST['ContactID']."&action=show");
+    header("Location: ".$_POST['returnToUrl']);
 }
 
-if (isset($_POST['ContactID']) && $_POST['ContactID']== 0 ) 
+if (isset($_POST['ContactID']) && $_POST['ContactID']== 0  && isset($_POST['contactAdd'])) 
 {
     $newContact = new Contact(
         htmlspecialchars( $_POST['firstname']),
@@ -65,11 +65,10 @@ if (isset($_POST['ContactID']) && $_POST['ContactID']== 0 )
         htmlspecialchars( $_POST['code']),
         htmlspecialchars(intval($_POST['countryId'])),
          0 ); // pour Vivant par defaut
-
     
     $ContactManager = new ContactManager(); // Création d'un objet
     $ContactManager->postContact($newContact);
-    
+    header("Location: ".$_POST['returnToUrl']);
 }
 
 

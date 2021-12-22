@@ -2,6 +2,7 @@
       
 <?php 
 ob_start();  
+$returnToUrl = $_SERVER['HTTP_REFERER'];
 $Contact = $showContact->fetchObject('Contact');
 if($Contact) {
     $countryManager = new CountryManager(); // Création d'un objet'
@@ -17,6 +18,8 @@ if($Contact) {
 <div class="container-fluid m-5">
     <form method="post" action="index.php?entity=contacts">
         <input id="ContactID" name="ContactID" type="hidden" value="<?=  $Contact->getId(); ?>">
+        <input id="returnToUrl" name="returnToUrl" type="hidden" value=<?=$returnToUrl ?>>
+        
         <table class="table bg-light mx-5" style="width: 80%;">
             <tr>
                 <th>N°</th>
@@ -63,7 +66,7 @@ if($Contact) {
                             name="isDead" <?= $Contact->getIsDead() ? 'checked':''  ?>checked> (coché = vivant)</td>
             </tr>
         </table>
-        <button type="submit" name="submit"class="btn btn-primary">Enregistrer</button>
+        <button type="submit" name="contactUpdate"class="btn btn-primary">Enregistrer</button>
     </form>
 
 

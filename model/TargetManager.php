@@ -58,7 +58,7 @@ class TargetManager extends Manager
 
     function postTarget($newTarget)
     {
-        $db = dbConnect();
+        $db = $this->dbConnect();
         $sql=  "INSERT INTO targets ( lastname, firstname,code, countryId, isDead, dateOfBirth)
         Value ('".
         $newTarget->getLastName()."','".
@@ -77,7 +77,7 @@ class TargetManager extends Manager
 
     function deleteTarget($id)
     {
-        $db = dbConnect();
+        $db = $this->dbConnect();
         $sql="DELETE FROM targets WHERE id = ".$id.";";
 
         $req = $db->prepare($sql);

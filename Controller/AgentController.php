@@ -30,7 +30,7 @@ function deleteAgent(int $id)
 {
     $AgentManager = new AgentManager(); // Création d'un objet
     $deleteAgent = $AgentManager->deleteAgent($id); // Appel d'une fonction de cet objet
-    header("Location: ?entity=Agents");
+    header("Location: ?entity=agents");
 }
 
 // prepare l'update d'un agent ___________________________________________________
@@ -57,7 +57,7 @@ if (isset($_POST['AgentID']) && $_POST['AgentID']<> 0 && isset($_POST['agentUpda
     
     $AgentManager = new AgentManager(); // Création d'un objet
     $AgentManager->writeAgent($updatedAgent);
-    header("Location: ?entity=agents&id=".$_POST['AgentID']."&action=show");
+    header("Location: ".$_POST['returnToUrl']);
 }
 
 
@@ -68,7 +68,7 @@ function newAgent()
 }
 
 // traitement du formulaire Ajout d'agent  _________________________________________
-if (isset($_POST['AgentID']) && $_POST['AgentID']== 0 && isset($_POST['AgentAdd'])) 
+if (isset($_POST['AgentID']) && $_POST['AgentID']== 0 && isset($_POST['agentAdd'])) 
 {
     $newAgent = new Agent(
         htmlspecialchars($_POST['firstname']),
@@ -80,6 +80,8 @@ if (isset($_POST['AgentID']) && $_POST['AgentID']== 0 && isset($_POST['AgentAdd'
 
     $AgentManager = new AgentManager(); // Création d'un objet
     $AgentManager->postAgent($newAgent);
+
+    header("Location: ".$_POST['returnToUrl']);
 }
 
 // formmulaire de gestion des specialité de l'agent ________________________________________________

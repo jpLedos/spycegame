@@ -1,10 +1,10 @@
-<?php $title = 'Agents de la mission'; ?>
+<?php $title = 'Planques de la mission'; ?>
         
 <?php 
 ob_start();    
 $mission = $showMission->fetchObject('mission');
 if($mission) {
-    $titleh2 = "<h2>Agents de la mission ".$mission->getCode()." ".$mission->getTitle()."</h2>";
+    $titleh2 = "<h2>Planques de la mission ".$mission->getCode()." ".$mission->getTitle()."</h2>";
 
     $countryManager = new CountryManager(); // Création d'un objet'
     $showCountry = $countryManager->getCountry($mission->getCountryId());// Appel d'une fonction de cet objet
@@ -25,41 +25,41 @@ if($mission) {
             <thead>
                 <tr class="bg-light">
                     <th>N°</span>   
-                    <th class="" >Agents</th>
+                    <th class="" >Hideaways</th>
                     <th></th>
                 </tr>
             </thead>
             <?php
-            while  ($agent = $listAgents->fetchObject('Agent'))
+            while  ($hideaway = $listHideaways->fetchObject('Hideaway'))
             {
             ?>
             <tr class=''>
-                <th scope="row"><?=  $agent->getId(); ?></th>   
+                <th scope="row"><?=  $hideaway->getId(); ?></th>           
                 <td>
-                    <label for=<?=  $agent->getId(); ?>>
-                        <?= htmlspecialchars($agent->getFullname()); ?>
+                    <label for=<?=  $hideaway->getId(); ?>>
+                        <?= htmlspecialchars($hideaway->getFullname()); ?>
                     </label>
                 </td>
                 <td>
                     <input 
                         type="checkbox"
-                        value=<?=  $agent->getId(); ?>
-                        id=<?=  $agent->getId(); ?>
-                        name="toBeAdded.<?= $agent->getId(); ?>."
-                        name="toBeAdded.<?= $agent->getId(); ?>."
-                        <?= !getIsMissionAgent($_GET['id'],$agent->getId()) ? 'checked':''  ?>checked />
+                        value=<?=  $hideaway->getId(); ?>
+                        id=<?=  $hideaway->getId(); ?>
+                        name="toBeAdded.<?= $hideaway->getId(); ?>."
+                        name="toBeAdded.<?= $hideaway->getId(); ?>."
+                        <?= !getIsMissionHideaway($_GET['id'],$hideaway->getId()) ? 'checked':''  ?>checked />
                 </td>
             </tr>
             <?php
             }
 
-            $listAgents->closeCursor();
+            $listHideaways->closeCursor();
             ?>
         </table>  
         <ul class="mt-5">
-            <li><a href=<?= '?entity=agents&action=new' ?>>Creer une nouvel Agent</a></li>
+            <li><a href=<?= '?entity=hideaways&action=new' ?>>Creer une nouvel Hideaway</a></li>
         </ul>   
-        <button type="submit" name="agentsUpdated" class="btn btn-primary">Enregistrer</button>
+        <button type="submit" name="hideawaysUpdated" class="btn btn-primary">Enregistrer</button>
     </form>
 </div>
 

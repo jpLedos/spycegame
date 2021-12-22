@@ -46,7 +46,6 @@ class HideawayManager extends Manager
         Hideaways.hideawayTypeId=". $updatedHideaway->getHideawayTypeId()."
         WHERE Hideaways.id = ?";
 
-        var_dump($sql);
         $req = $db->prepare($sql);
         $req->bindValue(1, ($_POST['HideawayId']), PDO::PARAM_STR);
         $req->execute();
@@ -56,14 +55,13 @@ class HideawayManager extends Manager
 
     function postHideaway($newHideaway)
     {
-        $db = dbConnect();
+        $db = $this->dbConnect();
         $sql=  "INSERT INTO Hideaways ( code, address, countryId, hideawayTypeId )
         Value ('".
         $newHideaway->getCode()."','".
         $newHideaway->getAddress()."',".
         $newHideaway->getCountryId().",".
         intval($newHideaway->getHideawayTypeId()).");";
-echo($sql);
 
         $req = $db->prepare($sql);
         $req->execute();
@@ -73,7 +71,7 @@ echo($sql);
 
     function deleteHideaway($id)
     {
-        $db = dbConnect();
+        $db = $this->dbConnect();
         $sql="DELETE FROM Hideaways WHERE id = ".$id.";";
 
         $req = $db->prepare($sql);

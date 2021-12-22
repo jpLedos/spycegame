@@ -3,31 +3,30 @@
 require_once('model/manager.php');
 require_once('Class/type.php');
 
-class typeManager extends Manager
+class StatutManager extends Manager
 {
-    function getTypes()
+    function getStatuts()
     {
         $db = $this->dbConnect();
-        $sql="SELECT types.id, types.type
-        FROM types";
+        $sql="SELECT statuts.id, statuts.statut
+        FROM statuts";
         $req = $db->prepare($sql);
         $req->execute();
         return $req;
     }
 
-    function getType(int $id)
+    function getStatut(int $id)
     {
         $db = $this->dbConnect();
         if(!isset($id)){
             $id=$_GET['id'];
         }
-        $sql="SELECT types.id, types.type
-        FROM types
-        WHERE types.id = ?";
-        //echo ("$sql");
+        $sql="SELECT statuts.id, statuts.statut
+        FROM statuts
+        WHERE statuts.id = ?";
+        //echo ("$sql".$id);
         $req = $db->prepare($sql);
         $req->bindValue(1, $id, PDO::PARAM_STR);
-        //$req->setFetchMode(PDO::FETCH_CLASS, 'type');
         $req->execute();
                 
         return $req;
@@ -54,7 +53,6 @@ class typeManager extends Manager
         $db = $this->dbConnect();
         $sql=  "INSERT INTO types ( type)
         Value ('".$newtype->getType()."');'";
-        echo($sql);
 
         $req = $db->prepare($sql);
         $req->execute();

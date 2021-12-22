@@ -1,6 +1,4 @@
 <?php
-require('controller/frontendController.php');
-
 
 if (isset($_GET['entity'])) {
     switch ($_GET['entity']) {
@@ -38,11 +36,11 @@ if (isset($_GET['entity'])) {
             break;
                 
         default: 
-        echo('defaut entity');
-        listMission();
+        header("Location: ?entity=missions");
+        break;
          
     }
 }
 else {
-    listMission();
+    header("Location: ?entity=missions");
 }

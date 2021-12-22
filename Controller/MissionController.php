@@ -1,14 +1,22 @@
 <?php
 
 require_once('model/MissionManager.php');
+
 require_once('model/CountryManager.php'); //besoin pour obtenir le getfullname(id)
 require_once('model/SpecialityManager.php');// besoin pour le name de la spe
 require_once('model/TypeManager.php'); // pour le type en clair
+require_once('model/StatutManager.php'); // pour le statut en clair
+
 require_once('model/AgentManager.php'); // pour les agents
 require_once('model/TargetManager.php'); // pour les cibles
 require_once('model/ContactManager.php'); // pour les contacts
 require_once('model/HideawayManager.php'); // pour les planques
 require_once('model/HydeawayTypeManager.php'); // pour les type de planques
+
+require_once('Controller/MissionAgentsController.php');
+require_once('Controller/MissionTargetsController.php');
+require_once('Controller/MissionContactsController.php');
+require_once('Controller/MissionHideawaysController.php');
 
 
 // liste des mission ______________________________________________________
@@ -20,18 +28,15 @@ function listMissions()
     require('view/Mission/listMissions.php');
 }
 
-
 //  detail d'un mission ___________________________________________________
 function showMission(int $Id)
 {
     $MissionManager = new MissionManager(); // Création d'un objet
-    $showMission = $MissionManager->getMission($Id); // Appel d'une fonction de cet objet
+    $showMission = $MissionManager->getMission($Id); 
     $missionAgents = $MissionManager->getAgentsFromMission($Id);
     $missionTargets = $MissionManager->getTargetsFromMission($Id);
     $missionContacts = $MissionManager->getContactsFromMission($Id);
     $missionHideaways = $MissionManager->getHideawaysFromMission($Id);
-    
-
     require('view/Mission/showMission.php'); 
 }
 
@@ -53,9 +58,6 @@ function editMission(int $Id)
     $missionTargets = $MissionManager->getTargetsFromMission($Id);
     $missionContacts = $MissionManager->getContactsFromMission($Id);
     $missionHideaways = $MissionManager->getHideawaysFromMission($Id);
-    
-    
-
     require('view/Mission/editMission.php');
 }
 
@@ -101,46 +103,5 @@ if (isset($_POST['MissionID']) && $_POST['MissionID']== 0 && isset($_POST['Missi
     $MissionManager = new MissionManager(); // Création d'un objet
     $MissionManager->postMission($newMission);
 }
-
-// formmulaire de gestion des agents de la mission _____________________________________
-function editAgents($Id) 
-{
-    $MissionManager = new MissionManager(); // Création d'un objet
-    $showMission = $MissionManager->getMission($Id); // Appel d'une fonction de cet objet
-    $agentManager = new AgentManager(); // Création d'un objet
-    $listAgents = $agentManager->getAgents(); // Appel d'une fonction de cet objet
-    require('view/Mission/listMissionAgents.php');
-}
-
-function getIsMissionAgent($missionId, $agentId)
-{
-    $MissionManager = new MissionManager(); 
-    return $MissionManager->isMissionAgent($missionId, $agentId);
-}
-
-
-//Traitement de la mise à jour des agents
-if (isset($_POST['agentsUpdated']) ) 
-{
-    $MissionManager = new MissionManager(); 
-    $MissionManager->purgeMissionAgents($_POST['missionId']); // on efface tous avant de reecrire
-    //$MissionManager->updateSpeciality($newMission);
-    foreach($_POST as $post => $value) {
-        if(substr($post,0,9)==="toBeAdded") {
-            $MissionManager->addAgentToMission($_POST['missionId'],$value); 
-        }
-    } ;
-
-    header("Location: ?entity=missions&id=".$_POST['missionId']."&action=edit");
-}
-
-
-//-------------------------------------------------------------------------------
-// a supprimer , statut est une Classe
-function missionStatut($statutId){
-    $MissionManager = new MissionManager(); // Création d'un objet
-    return $MissionManager->getMissionStatut($statutId); 
-}
-
 
 

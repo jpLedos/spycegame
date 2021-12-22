@@ -6,6 +6,7 @@ $titleh2 = "<h2>Liste des Missions</h2>";
 $countryManager = new CountryManager(); 
 $typeManager = new TypeManager(); 
 $specialityManager = new SpecialityManager(); 
+$statutManager = new StatutManager(); 
 ?> 
 
 <table class="table table-hover">
@@ -35,13 +36,14 @@ $specialityManager = new SpecialityManager();
         $showType = $typeManager->getType($mission->getTypeId());
         $type = $showType->fetchObject('Type');
 
-        $missionStatut = missionStatut($mission->getStatutId())
+        $showStatut = $statutManager->getStatut($mission->getStatutId());
+        $statut = $showStatut->fetchObject('Statut');
     ?>
         <tr class=" ">
             <th scope="row"><?=  $mission->getId(); ?></th>   
             <td><?=  htmlspecialchars($mission->getTitle()); ?></td>
             <td><em> <?= htmlspecialchars($mission->getCode()); ?></em></td>
-            <td><?= $missionStatut['statut']; ?></td>
+            <td><?= $statut->getStatut(); ?></td>
             <td><?= $type->getType(); ?></td>
             <td><?= $speciality->getSpeciality(); ?></td>
             <td><?= $country->getFullname(); ?></td>

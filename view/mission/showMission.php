@@ -19,7 +19,9 @@ if($mission) {
     $showSpeciality = $specialityManager->getSpeciality($mission->getSpecialityId());
     $speciality = $showSpeciality->fetchObject('Speciality');
 
-    $missionStatut = missionStatut($mission->getStatutId());
+    $statutManager = new StatutManager();  // get speciality from specialityId
+    $showStatut = $statutManager->getStatut($mission->getStatutId());
+    $statut = $showStatut->fetchObject('Statut');
 
 } else {
     echo('Aucun resultat pour cette requête !');
@@ -51,7 +53,7 @@ if($mission) {
         </tr>
         <tr>
             <th>Statut</th>
-            <td><?= $missionStatut['statut']; ?> </td>
+            <td><?= $statut->getStatut(); ?></td>
         </tr>
         <tr>
             <th>Specialité</th>
