@@ -7,7 +7,7 @@ if($Contact) {
     $countryManager = new CountryManager(); // Création d'un objet'
     $showCountry = $countryManager->getCountry($Contact->getCountryId());// Appel d'une fonction de cet objet
     $country = $showCountry->fetchObject('Country');
-    $titleh2 = "<h2>Description de la cible code : ".$Contact->getCode()."</h2>";
+    $titleh2 = "<h2>Description du Contact  code : ".$Contact->getCode()."</h2>";
 } else {
     echo('Aucun resultat pour cette requête');
     die;
@@ -23,30 +23,43 @@ if($Contact) {
         </tr>
         <tr>
             <th>Nom</th>
-            <td><?=  htmlspecialchars($Contact->getLastName()); ?></td>
+            <td><?=  $Contact->getLastName(); ?></td>
         </tr>
         <tr>
             <th>Prenom</th>
-            <td><?= htmlspecialchars($Contact->getFirstname());  ?></td>
+            <td><?= $Contact->getFirstname();  ?></td>
         </tr>
         <tr>
             <th>Pays</th>
-            <td><?= htmlspecialchars($country->getFullName());  ?></td>
+            <td><?= $country->getFullName();  ?></td>
         </tr>
         <tr>
             <th>né(e) en</th>
-            <td><?= $Contact->getDateOfBirth();  ?> </td>
+            <td><?= date('d-m-Y',strToTime($Contact->getDateOfBirth()));  ?> </td>
         </tr>
         <tr>
             <th>En vie</th>
             <td><?= !$Contact->getIsDead()? 'Vivant': 'Décédé';  ?> </td>
+        </tr>
+        <tr>
+            <th>Missions</th>
+            <td>
+                <ul>
+                <?php 
+                while ($mission = $contactMissions->fetch(PDO::FETCH_ASSOC)) {  
+                ?>
+                    <li><?= $mission['title']; ?> </li>
+                <?php  
+                } 
+                ?> 
+                </ul>
+            </td>
         </tr>
     </table>
 
 
     <ul class="mt-5">
         <li><a href=<?= '?entity=contacts&id='.$Contact->getId().'&action=edit' ?>>edit</a></li>
-        <li><a href=<?= '?entity=contacts&id='.$Contact->getId().'&action=delete' ?>>delete</a></li>
         <li><a href=<?= '?entity=contacts' ?>>retour à la liste</a></li>
     </ul>   
 
@@ -56,4 +69,5 @@ if($Contact) {
 <?php 
 $showContact->closeCursor();
 $content = ob_get_clean();
+$script="<script src='./scripts/no-script.js'></script>";
 require('view/layout.php'); ?>

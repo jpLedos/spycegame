@@ -26,14 +26,23 @@ $countryManager = new CountryManager(); // Création d'un objet'
         $showCountry = $countryManager->getCountry($Agent->getCountryId());// Appel d'une fonction de cet objet
         $country = $showCountry->fetchObject('Country');
     ?>
-        <tr class="  <?= !$Agent->getIsDead() ? 'bg-success' : 'bg-danger'  ?>">
+        <tr class="line-agent">
+        <td class="isConform" style=display:none><?= $Agent->getIsConform() ?></td> 
+        <td class="isDead" style=display:none><?= $Agent->getIsDead() ?></td> 
             <th scope="row"><?=  $Agent->getId(); ?></th>   
-            <td><?=  htmlspecialchars($Agent->getLastname()); ?></td>
-            <td> <?= htmlspecialchars($Agent->getFirstname());  ?></td>
-            <td><em> <?= htmlspecialchars($Agent->getCode()); ?></em></td>
+            <td><?=  $Agent->getLastname(); ?></td>
+            <td> <?= $Agent->getFirstname();  ?></td>
+            <td><em> <?= $Agent->getCode(); ?></em></td>
             <td><?= $country->getFullname(); ?></td>
             <td><?= !$Agent->getIsDead() ? 'Vivant': 'Décédé';  ?> </td>
-            <td class ="bg-light text-center"><a href=<?= '?entity=agents&id='.$Agent->getId().'&action=show' ?>>show</a></td>
+            <td class ="bg-light text-center d-flex justify-content-evenly ">
+                <a href=<?= '?entity=agents&id='.$Agent->getId().'&action=show' ?>>
+                    <img class="picto" title= "show" src="./asset/image/view.png" alt="show icon"></a>
+                <a href=<?= '?entity=agents&id='.$Agent->getId().'&action=edit' ?>>
+                    <img class="picto" title= "edit" src="./asset/image/edition.png" alt="edit icon"></a>
+
+            </td>
+           
         </tr>
     <?php
     }
@@ -47,6 +56,7 @@ $countryManager = new CountryManager(); // Création d'un objet'
     <li><a href=<?= '?entity=agents&action=new' ?>>Creer un nouveau Agent</a></li>
 </ul> 
 
-<?php $content = ob_get_clean(); ?>
-
-<?php require('view/layout.php'); ?>
+<?php $content = ob_get_clean(); 
+$script="<script src='./scripts/listAgents.js'></script>";
+require('view/layout.php');
+?>

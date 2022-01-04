@@ -36,12 +36,17 @@ $hidewayTypeManager = new HydeawayTypeManager(); // Création d'un objet'
         ?>
             <tr>
                 <th scope="row"><?=  $Hideaway->getId(); ?></th>   
-                <td><?=  htmlspecialchars($Hideaway->getCode()); ?></td>
-                <td> <?= htmlspecialchars($Hideaway->getAddress());  ?></td>
+                <td><?=  $Hideaway->getCode(); ?></td>
+                <td> <?= $Hideaway->getAddress();  ?></td>
                 <td><?= $country ? $country->getFullName() : 'inconnu'; ?></td>
                 <td><?= $hideawayType ? $hideawayType->getName() : 'inconnu'; ?></td>
                 
-                <td class ="bg-light text-center"><a href=<?= '?entity=hideaways&id='.$Hideaway->getId().'&action=show' ?>>show</a></td>
+                <td class ="bg-light text-center d-flex justify-content-evenly ">
+                    <a href=<?= '?entity=hideaways&id='.$Hideaway->getId().'&action=show' ?>>
+                        <img class="picto" title= "show" src="./asset/image/view.png" alt="show icon"></a>
+                    <a href=<?= '?entity=hideaways&id='.$Hideaway->getId().'&action=edit' ?>>
+                        <img class="picto" title= "edit" src="./asset/image/edition.png" alt="edit icon"></a>
+                </td>
             </tr>
         <?php
         }
@@ -55,6 +60,7 @@ $hidewayTypeManager = new HydeawayTypeManager(); // Création d'un objet'
     <li><a href=<?= '?entity=hideaways&action=new' ?>>Creer une nouvelle planque</a></li>
 </ul> 
 
-<?php $content = ob_get_clean(); ?>
-
-<?php require('view/layout.php'); ?>
+<?php $content = ob_get_clean();
+$script="<script src='./scripts/no-script.js'></script>";
+require('view/layout.php'); 
+?>

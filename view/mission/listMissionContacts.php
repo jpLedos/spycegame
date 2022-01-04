@@ -32,12 +32,17 @@ if($mission) {
             <?php
             while  ($contact = $listContacts->fetchObject('Contact'))
             {
+                $showContactCountry = $countryManager->getCountry($contact->getCountryId()); 
+                $contactCountry = $showContactCountry->fetchObject('Country');
             ?>
             <tr class=''>
                 <th scope="row"><?=  $contact->getId(); ?></th>           
                 <td>
                     <label for=<?=  $contact->getId(); ?>>
-                        <?= htmlspecialchars($contact->getFullname()); ?>
+                        <?= $contact->getFullname(); ?>
+                        <div class="details">    
+                        <p>Pays :<?= $contactCountry->getFullName() ?></p>
+                        <div>
                     </label>
                 </td>
                 <td>
@@ -48,6 +53,9 @@ if($mission) {
                         name="toBeAdded.<?= $contact->getId(); ?>."
                         name="toBeAdded.<?= $contact->getId(); ?>."
                         <?= !getIsMissionContact($_GET['id'],$contact->getId()) ? 'checked':''  ?>checked />
+                </td>
+                <td><a href=<?= '?entity=contacts&id='.$contact->getId().'&action=edit' ?>>
+                    <img class="picto" title= "edit" src="./asset/image/edition.png" alt="edit icon"></a>
                 </td>
             </tr>
             <?php
@@ -64,6 +72,6 @@ if($mission) {
 </div>
 
 
-<?php $content = ob_get_clean(); ?>
-
-<?php require('view/layout.php'); ?>
+<?php $content = ob_get_clean();
+$script="<script src='./scripts/no-script.js'></script>";
+require('view/layout.php'); ?>

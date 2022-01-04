@@ -3,6 +3,7 @@
 <?php 
 ob_start();       
 $titleh2 = "<h2>Liste des types de mission</h2>";
+
 ?> 
 
 <div class="container-fluid m-5">
@@ -22,8 +23,15 @@ $titleh2 = "<h2>Liste des types de mission</h2>";
         ?>
             <tr class=""bg-success">
                 <th scope="row"><?=  $Type->getId(); ?></th>   
-                <td><?=  htmlspecialchars($Type->getType()); ?></td>
-                <td class ="bg-light text-center"><a href=<?= '?entity=types&id='.$Type->getId().'&action=show' ?>>show</a></td>
+                <td><?=  $Type->getType(); ?></td>
+
+                <td class ="bg-light text-center d-flex justify-content-evenly ">
+                    <a href=<?= '?entity=types&id='.$Type->getId().'&action=show' ?>>
+                        <img class="picto" title= "show" src="./asset/image/view.png" alt="show icon"></a>
+                    <a href=<?= '?entity=types&id='.$Type->getId().'&action=edit' ?>>
+                        <img class="picto" title= "edit" src="./asset/image/edition.png" alt="edit icon"></a>
+                </td>
+
             </tr>
         <?php
         }
@@ -37,6 +45,6 @@ $titleh2 = "<h2>Liste des types de mission</h2>";
     <li><a href=<?= '?entity=types&action=new' ?>>Creer un nouveau Type</a></li>
 </ul> 
 
-<?php $content = ob_get_clean(); ?>
-
-<?php require('view/layout.php'); ?>
+<?php $content = ob_get_clean();
+$script="<script src='./scripts/no-script.js'></script>";
+require('view/layout.php'); ?>

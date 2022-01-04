@@ -6,12 +6,18 @@ require_once('Class/Statut.php');
 
 class MissionManager extends Manager
 {
-    function getMissions()
+    function getMissions(string $filter)
     {
         $db = $this->dbConnect();
+        if ($filter !='') {
+            $filter = " WHERE title like '%$filter%'
+                        OR code like '%$filter%';";
+        }
+ 
         $sql="SELECT id ,title, descriptions, code, countryId, typeId,  
-        statutId, specialityId, startDate, endDate 
+        statutId, specialityId, startDate, endDate ,isConform
         FROM missions";
+        $sql = $sql.$filter;
         //echo($sql);
         $req = $db->prepare($sql);
         $req->execute();
@@ -23,7 +29,7 @@ class MissionManager extends Manager
     {
         $db = $this->dbConnect();
         $sql="SELECT id ,title, descriptions, code, countryId, typeId,  
-        statutId, specialityId ,startDate, endDate 
+        statutId, specialityId ,startDate, endDate ,isConform
         FROM missions
         WHERE Missions.id = ?";
     
@@ -45,13 +51,12 @@ class MissionManager extends Manager
         Missions.countryId=".intval($updatedMission->getCountryId()).",
         Missions.typeId=".intval($updatedMission->getTypeId()).",
         Missions.statutId=".intval($updatedMission->getStatutId()).",
-        Missions.specialityId=". intval($updatedMission->getSpecialityId())."
+        Missions.specialityId=". intval($updatedMission->getSpecialityId()).",
+        Missions.startDate='".$updatedMission->getStartDate()."',
+        Missions.endDate='".$updatedMission->getEndDate()."',
+        Missions.isConform=".$updatedMission->getIsConform()."
         WHERE Missions.id = ?";
-
-        // ,
-        // Missions.startDate=".$updatedMission->getStartDate().",
-        // Missions.endDate=".$updatedMission->getEndDate()."
-
+        //echo($sql);die;
         $req = $db->prepare($sql);
         $req->bindValue(1, ($_POST['MissionId']), PDO::PARAM_STR);
         $req->execute();
@@ -62,15 +67,19 @@ class MissionManager extends Manager
     function postMission($newMission)
     {
         $db = $this->dbConnect();
-        $sql=  "INSERT INTO Missions ( lastname, firstname,code, countryId, isDead, dateOfBirth)
+        $sql=  "INSERT INTO Missions ( title, code,countryId,statutId, typeId, specialityId, 
+        descriptions, startDate, endDate)
         Value ('".
-        $newMission->getLastName()."','".
-        $newMission->getFirstName()."','".
+        $newMission->getTitle()."','".
         $newMission->getCode()."','".
-        intval($newMission->getCountryId())."','".
-        $newMission->getIsDead()."','".
-        $newMission->getDateOfBirth()."');";
-
+        $newMission->getCountryId()."','".
+        $newMission->getStatutId()."','".
+        intval($newMission->getTypeId())."','".
+        $newMission->getSpecialityId()."','".
+        $newMission->getDescriptions()."','".
+        $newMission->getStartDate()."','".
+        $newMission->getEndDate()."');";
+        //echo $sql;die;
         $req = $db->prepare($sql);
         $req->execute();
 

@@ -26,25 +26,25 @@ if($agent) {
         </tr>
         <tr>
             <th>Nom</th>
-            <td><?=  htmlspecialchars($agent->getLastName()); ?></td>
+            <td><?=  $agent->getLastName(); ?></td>
         </tr>
         <tr>
             <th>Prenom</th>
-            <td><?= htmlspecialchars($agent->getFirstname());  ?></td>
+            <td><?= $agent->getFirstname();  ?></td>
         </tr>
         <tr>
             <th>Pays</th>
-            <td><?= htmlspecialchars($country->getFullName());  ?></td>
+            <td><?= $country->getFullName();  ?></td>
         </tr>
         <tr>
             <th>né(e) en</th>
-            <td><?= $agent->getDateOfBirth();  ?> </td>
+            <td><?= date('d-m-Y',strToTime($agent->getDateOfBirth()));  ?> </td>
         </tr>
         <tr>
             <th>En vie</th>
             <td><?= !$agent->getIsDead()? 'Vivant': 'Décédé';  ?> </td>
         </tr>
-        <tr>
+        <tr id="specialities">
             <th>Specialités</th>
             <td>
                 <ul>
@@ -54,14 +54,29 @@ if($agent) {
                     } 
                 ?>
                 </ul>
+                <div class="rules">
+                    Un agent doit posseder au moins une specialité!
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th>Missions</th>
+            <td>
+                <ul>
+                <?php 
+                while ($mission = $agentMissions->fetch(PDO::FETCH_ASSOC)) {  
+                ?>
+                    <li><?= $mission['title']; ?> </li>
+                <?php  
+                } 
+                ?> 
+                </ul>
             </td>
         </tr>
     </table>
 
-
     <ul class="mt-5">
         <li><a href=<?= '?entity=agents&id='.$agent->getId().'&action=edit' ?>>edit</a></li>
-        <li><a href=<?= '?entity=agents&id='.$agent->getId().'&action=delete' ?>>delete</a></li>
         <li><a href=<?= '?entity=agents' ?>>retour à la liste</a></li>
     </ul>   
 
@@ -71,4 +86,5 @@ if($agent) {
 <?php 
 $showAgent->closeCursor();
 $content = ob_get_clean();
+$script="<script src='./scripts/checkAgent.js'></script>";
 require('view/layout.php'); ?>

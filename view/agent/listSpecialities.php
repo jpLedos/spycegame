@@ -21,6 +21,9 @@ if($agent) {
 <div class="container-fluid m-5">
     <form method="post" action="index.php?entity=agents">   
     <input id="AgentId" name="AgentId" type="hidden" value="<?=  $_GET['id']; ?>">
+    <?php if(isset($_GET['missionId'])) { ?>
+        <input id="missionId" name="missionId" type="hidden" value="<?= $_GET["missionId"]; ?>">
+        <?php } ?>
     <input id="returnTo" name="returnTo" type="hidden" value="<?=  $returnTo ?>">
         <table class="table table-hover bg-light" style="width: 60%;">
             <thead>
@@ -59,6 +62,6 @@ if($agent) {
 </div>
 
 
-<?php $content = ob_get_clean(); ?>
-
-<?php require('view/layout.php'); ?>
+<?php $content = ob_get_clean(); 
+$script="<script src='./scripts/no-script.js'></script>";
+ require('view/layout.php'); ?>

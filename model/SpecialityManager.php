@@ -71,4 +71,34 @@ class SpecialityManager extends Manager
 
         return $req;
     }
+
+        //retourne en texte les missions de la specialité
+        function getMissionsFromSpeciality($specialityId)
+        {
+            $db = $this->dbConnect();
+            $sql="SELECT specialityId, title  FROM missions
+            WHERE specialityId = ".$specialityId;
+    
+           //echo($sql);die;
+            $req = $db->prepare($sql);
+            $req->execute();
+    
+            return $req;
+        }
+
+             //retourne en texte les missions de l'agent
+     function getAgentsFromspeciality($specialityId)
+     {
+         $db = $this->dbConnect();
+         $sql="SELECT agentId, lastname, firstname FROM agents_specialities
+         INNER JOIN agents
+         ON agents_specialities.agentId = agents.id
+         WHERE specialityId = ".$specialityId;
+ 
+        //echo($sql);die;
+         $req = $db->prepare($sql);
+         $req->execute();
+ 
+         return $req;
+     }
 }

@@ -19,17 +19,35 @@ if($Speciality) {
         </tr>
         <tr>
             <th>Spécialité</th>
-            <td><?=  htmlspecialchars($Speciality->getSpeciality()); ?></td>
+            <td><?=  $Speciality->getSpeciality(); ?></td>
         </tr>
         <tr>
-       
+        <tr>
+            <th>Missions</th>
+            <td>
+                <ul>
+                <?php while ($mission = $specialityMissions->fetch(PDO::FETCH_ASSOC)) {?>
+                    <li><?= $mission['title']; ?> </li>
+                <?php } ?> 
+                </ul>
+            </td>
+        </tr> 
+        <tr>
+            <th>Agents</th>
+            <td>
+                <ul>
+                <?php while ($agent = $specialityAgents->fetch(PDO::FETCH_ASSOC)) {?>
+                    <li><?= $agent['firstname'].' '.$agent['lastname'] ; ?> </li>
+                <?php } ?> 
+                </ul>
+            </td>
+        </tr> 
 
     </table>
 
 
     <ul class="mt-5">
         <li><a href=<?= '?entity=specialities&id='.$Speciality->getId().'&action=edit' ?>>edit</a></li>
-        <li><a href=<?= '?entity=specialities&id='.$Speciality->getId().'&action=delete' ?>>delete</a></li>
         <li><a href=<?= '?entity=specialities' ?>>retour à la liste</a></li>
     </ul>   
 
@@ -39,4 +57,5 @@ if($Speciality) {
 <?php 
 $showSpeciality->closeCursor();
 $content = ob_get_clean();
+$script="<script src='./scripts/no-script.js'></script>";
 require('view/layout.php'); ?>

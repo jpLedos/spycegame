@@ -15,7 +15,7 @@ if (isset($_GET['action'])) {
         
         case 'edit' : 
             if (isset($_GET['id']) && $_GET['id'] > 0) {   
-                if (isset($_SESSION["ADMIN"]) && $_SESSION["ADMIN"] == "yes") {                             
+                if (isset($_SESSION["ADMIN"]) && $_SESSION["ADMIN"] == "yes") {                   
                     editMission($_GET['id']);
                 } else { 
                     echo 'Erreur : Vous n\'avez pas les droits';  
@@ -89,6 +89,9 @@ if (isset($_GET['action'])) {
         }               
         break;
  
+        case 'none' : 
+            break;
+
         default : 
         try {
             listMissions(); 

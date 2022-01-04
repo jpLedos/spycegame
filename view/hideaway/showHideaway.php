@@ -28,25 +28,34 @@ if($Hideaway) {
         </tr>
         <tr>
             <th>Code</th>
-            <td><?=  htmlspecialchars($Hideaway->getCode()); ?></td>
+            <td><?=  $Hideaway->getCode(); ?></td>
         </tr>
         <tr>
             <th>Adresse</th>
-            <td><?= htmlspecialchars($Hideaway->getAddress());  ?></td>
+            <td><?= $Hideaway->getAddress();  ?></td>
         </tr>
         <tr>
             <th>Pays</th>
-            <td><?= htmlspecialchars($country->getFullName());  ?></td>
+            <td><?= $country->getFullName();  ?></td>
         </tr>
         <tr>
             <th>Type de planque</th>
-            <td><?= htmlspecialchars($hideawayType->getName());  ?> </td>
-        </tr>      
+            <td><?= $hideawayType->getName();  ?> </td>
+        </tr>
+        <tr>
+            <th>Missions</th>
+            <td>
+                <ul>
+                <?php while ($mission = $hideawayMissions->fetch(PDO::FETCH_ASSOC)) {?>
+                    <li><?= $mission['title']; ?> </li>
+                <?php } ?> 
+                </ul>
+            </td>
+        </tr>     
     </table>
 
     <ul class="mt-5">
         <li><a href=<?= '?entity=hideaways&id='.$Hideaway->getId().'&action=edit' ?>>edit</a></li>
-        <li><a href=<?= '?entity=hideaways&id='.$Hideaway->getId().'&action=delete' ?>>delete</a></li>
         <li><a href=<?= '?entity=hideaways' ?>>retour à la liste</a></li>
     </ul>   
 
@@ -56,4 +65,5 @@ if($Hideaway) {
 <?php 
 $showHideaway->closeCursor();
 $content = ob_get_clean();
+$script="<script src='./scripts/no-script.js'></script>";
 require('view/layout.php'); ?>

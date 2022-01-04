@@ -2,10 +2,10 @@
 // formmulaire de gestion des contacts de la mission _____________________________________
 function editContacts($Id) 
 {
-    $MissionManager = new MissionManager(); // Création d'un objet
-    $showMission = $MissionManager->getMission($Id); // Appel d'une fonction de cet objet
-    $contactManager = new ContactManager(); // Création d'un objet
-    $listContacts = $contactManager->getContacts(); // Appel d'une fonction de cet objet
+    $MissionManager = new MissionManager(); 
+    $showMission = $MissionManager->getMission($Id); 
+    $contactManager = new ContactManager(); 
+    $listContacts = $contactManager->getContacts(); 
     require('view/Mission/listMissionContacts.php');
 }
 

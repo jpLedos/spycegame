@@ -26,14 +26,20 @@ $countryManager = new CountryManager(); // Création d'un objet'
         $showCountry = $countryManager->getCountry($target->getCountryId());// Appel d'une fonction de cet objet
         $country = $showCountry->fetchObject('Country');
     ?>
-        <tr class="  <?= !$target->getIsDead() ? 'bg-success' : 'bg-danger'  ?>">
+        <tr class="  <?= $target->getIsDead() ? 'bg-dark text-white':''  ?>">
         <th scope="row"><?=  $target->getId(); ?></th>   
-                <td><?=  htmlspecialchars($target->getLastname()); ?></td>
-                <td> <?= htmlspecialchars($target->getFirstname());  ?></td>
-                <td><em> <?= htmlspecialchars($target->getCode()); ?></em></td>
+                <td><?=  $target->getLastname(); ?></td>
+                <td> <?= $target->getFirstname();  ?></td>
+                <td><em> <?= $target->getCode(); ?></em></td>
                 <td><?= $country->getFullname(); ?></td>
                 <td><?= !$target->getIsDead() ? 'Vivant': 'Décédé';  ?> </td>
-                <td class ="bg-light text-center"><a href=<?= '?entity=targets&id='.$target->getId().'&action=show' ?>>show</a></td>
+
+                <td class ="bg-light text-center d-flex justify-content-evenly ">
+                    <a href=<?= '?entity=targets&id='.$target->getId().'&action=show' ?>>
+                        <img class="picto" title= "show" src="./asset/image/view.png" alt="show icon"></a>
+                    <a href=<?= '?entity=targets&id='.$target->getId().'&action=edit' ?>>
+                        <img class="picto" title= "edit" src="./asset/image/edition.png" alt="edit icon"></a>
+                </td>
         </tr>
     <?php
     }
@@ -47,6 +53,6 @@ $countryManager = new CountryManager(); // Création d'un objet'
     <li><a href=<?= '?entity=targets&action=new' ?>>Creer une nouvelle cible</a></li>
 </ul> 
 
-<?php $content = ob_get_clean(); ?>
-
-<?php require('view/layout.php'); ?>
+<?php $content = ob_get_clean(); 
+$script="<script src='./scripts/no-script.js'></script>";
+require('view/layout.php'); ?>

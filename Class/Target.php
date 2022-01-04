@@ -106,7 +106,7 @@ class Target
     public function getFullName() :string
     {
     
-        return $this->firstname." ".$this->lastname." --> Code : ".$this->code;
+        return $this->firstname." ".$this->lastname." Code : ".$this->code;
     }
     
 }

@@ -6,22 +6,24 @@ require_once('model/CountryManager.php'); //besoin pour obtenir le getfullname(i
 function listContacts() 
 {
     //echo(' dans Contact controller)');
-    $ContactManager = new ContactManager(); // Création d'un objet
-    $listContacts = $ContactManager->getContacts(); // Appel d'une fonction de cet objet
+    $ContactManager = new ContactManager(); 
+    $listContacts = $ContactManager->getContacts(); 
     require('view/Contact/listContacts.php');
 }
 
 function showContact(int $id)
 {
-    $ContactManager = new ContactManager(); // Création d'un objet
-    $showContact = $ContactManager->getContact($id); // Appel d'une fonction de cet objet
+    $ContactManager = new ContactManager(); 
+    $showContact = $ContactManager->getContact($id);
+    $contactMissions = $ContactManager->getMissionsFromContact($id);  
     require('view/Contact/showContact.php');
 }
 
 function editContact(int $id)
 {
-    $ContactManager = new ContactManager(); // Création d'un objet
-    $showContact = $ContactManager->getContact($id); // Appel d'une fonction de cet objet
+    $ContactManager = new ContactManager(); 
+    $showContact = $ContactManager->getContact($id); 
+    $contactMissions = $ContactManager->getMissionsFromContact($id); 
     require('view/Contact/editContact.php');
 }
 
@@ -33,8 +35,13 @@ function newContact()
 function deleteContact(int $id)
 {
     $ContactManager = new ContactManager(); // Création d'un objet
+    $contactMissions = $ContactManager->getMissionsFromContact($id); 
+    if($contactMissions->rowCount()==0) {
     $deleteContact = $ContactManager->deleteContact($id); // Appel d'une fonction de cet objet
     header("Location: ?entity=contacts");
+    }else{
+        echo("Un contact ayant des missions ne peut être supprimé !");
+    }
 }
 
 
@@ -43,10 +50,10 @@ function deleteContact(int $id)
 if (isset($_POST['ContactID']) && $_POST['ContactID']<> 0  && isset($_POST['contactUpdate']) ) 
 {
     $updatedContact = new Contact(
-        htmlspecialchars($_POST['firstname']),
-        htmlspecialchars($_POST['lastname']),
+        htmlspecialchars($_POST['firstname'],ENT_QUOTES,'UTF-8',true),
+        htmlspecialchars($_POST['lastname'],ENT_QUOTES,'UTF-8',true),
         htmlspecialchars($_POST['dateOfBirth']),
-        htmlspecialchars( $_POST['code']), 
+        htmlspecialchars( $_POST['code'],ENT_QUOTES,'UTF-8',true), 
         htmlspecialchars($_POST['countryId']),   
         isset($_POST['isDead'])? 0 : 1
     );
@@ -59,10 +66,10 @@ if (isset($_POST['ContactID']) && $_POST['ContactID']<> 0  && isset($_POST['cont
 if (isset($_POST['ContactID']) && $_POST['ContactID']== 0  && isset($_POST['contactAdd'])) 
 {
     $newContact = new Contact(
-        htmlspecialchars( $_POST['firstname']),
-        htmlspecialchars($_POST['lastname']),
+        htmlspecialchars( $_POST['firstname'],ENT_QUOTES,'UTF-8',true),
+        htmlspecialchars($_POST['lastname'],ENT_QUOTES,'UTF-8',true),
         htmlspecialchars($_POST['dateOfBirth']),
-        htmlspecialchars( $_POST['code']),
+        htmlspecialchars( $_POST['code'],ENT_QUOTES,'UTF-8',true),
         htmlspecialchars(intval($_POST['countryId'])),
          0 ); // pour Vivant par defaut
     

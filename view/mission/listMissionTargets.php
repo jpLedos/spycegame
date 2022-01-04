@@ -32,12 +32,17 @@ if($mission) {
             <?php
             while  ($target = $listTargets->fetchObject('Target'))
             {
+                $showTargetCountry = $countryManager->getCountry($target->getCountryId()); 
+                $targetCountry = $showTargetCountry->fetchObject('Country');
             ?>
             <tr class=''>
                 <th scope="row"><?=  $target->getId(); ?></th>           
                 <td>
                     <label for=<?=  $target->getId(); ?>>
-                        <?= htmlspecialchars($target->getFullname()); ?>
+                        <?= $target->getFullname(); ?>
+                        <div class="details">    
+                        <p>Pays :<?= $targetCountry->getFullName() ?></p>
+                        <div>
                     </label>
                 </td>
                 <td>
@@ -48,6 +53,9 @@ if($mission) {
                         name="toBeAdded.<?= $target->getId(); ?>."
                         name="toBeAdded.<?= $target->getId(); ?>."
                         <?= !getIsMissionTarget($_GET['id'],$target->getId()) ? 'checked':''  ?>checked />
+                </td>
+                <td><a href=<?= '?entity=targets&id='.$target->getId().'&action=edit' ?>>
+                    <img class="picto" title= "edit" src="./asset/image/edition.png" alt="edit icon"></a>
                 </td>
             </tr>
             <?php
@@ -64,6 +72,6 @@ if($mission) {
 </div>
 
 
-<?php $content = ob_get_clean(); ?>
-
-<?php require('view/layout.php'); ?>
+<?php $content = ob_get_clean(); 
+$script="<script src='./scripts/no-script.js'></script>";
+require('view/layout.php'); ?>

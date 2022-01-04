@@ -19,6 +19,7 @@ function showAgent(int $Id)
     $AgentManager = new AgentManager(); // Création d'un objet
     $showAgent = $AgentManager->getAgent($Id); // Appel d'une fonction de cet objet
     $agentSpecialities = $AgentManager->getSpecialitiesFromAgent($Id);
+    $agentMissions = $AgentManager->getMissionsFromAgent($Id);
     require('view/Agent/showAgent.php');
 
     
@@ -29,8 +30,13 @@ function showAgent(int $Id)
 function deleteAgent(int $id)
 {
     $AgentManager = new AgentManager(); // Création d'un objet
-    $deleteAgent = $AgentManager->deleteAgent($id); // Appel d'une fonction de cet objet
+    $agentMissions = $AgentManager->getMissionsFromAgent($id);
+    if($agentMissions->rowCount()==0) {
+        $deleteAgent = $AgentManager->deleteAgent($id); // Appel d'une fonction de cet objet
     header("Location: ?entity=agents");
+    } else {
+        echo("Un agent ayant des missions ne peut être supprimé !");
+    }
 }
 
 // prepare l'update d'un agent ___________________________________________________
@@ -39,6 +45,7 @@ function editAgent(int $Id)
     $AgentManager = new AgentManager(); // Création d'un objet
     $showAgent = $AgentManager->getAgent($Id); // Appel d'une fonction de cet objet
     $agentSpecialities = $AgentManager->getSpecialitiesFromAgent($Id);
+    $agentMissions = $AgentManager->getMissionsFromAgent($Id);
     require('view/Agent/editAgent.php');
 }
 
@@ -47,17 +54,21 @@ function editAgent(int $Id)
 if (isset($_POST['AgentID']) && $_POST['AgentID']<> 0 && isset($_POST['agentUpdate'])) 
 {
     $updatedAgent = new Agent(
-        htmlspecialchars($_POST['firstname']),
-        htmlspecialchars($_POST['lastname']),
+        htmlspecialchars($_POST['firstname'],ENT_QUOTES,'UTF-8',true),
+        htmlspecialchars($_POST['lastname'],ENT_QUOTES,'UTF-8',true),
         htmlspecialchars($_POST['dateOfBirth']),
-        htmlspecialchars($_POST['code']), 
+        htmlspecialchars($_POST['code'],ENT_QUOTES,'UTF-8',true), 
         htmlspecialchars($_POST['countryId']),   
-        isset($_POST['isDead'])? 0 : 1
+        isset($_POST['isDead'])? 0 : 1,
+        htmlspecialchars($_POST['isConform'])
     );
     
     $AgentManager = new AgentManager(); // Création d'un objet
     $AgentManager->writeAgent($updatedAgent);
-    header("Location: ".$_POST['returnToUrl']);
+    //header("Location: ".$_POST['returnToUrl']);
+    if($_POST['missionId']){
+       header("Location: ?entity=missions&id=".$_POST['missionId']."&action=editAgents") ;
+    }
 }
 
 
@@ -71,10 +82,10 @@ function newAgent()
 if (isset($_POST['AgentID']) && $_POST['AgentID']== 0 && isset($_POST['agentAdd'])) 
 {
     $newAgent = new Agent(
-        htmlspecialchars($_POST['firstname']),
-        htmlspecialchars($_POST['lastname']),
+        htmlspecialchars($_POST['firstname'],ENT_QUOTES,'UTF-8',true),
+        htmlspecialchars($_POST['lastname'],ENT_QUOTES,'UTF-8',true),
         htmlspecialchars($_POST['dateOfBirth']),
-        htmlspecialchars($_POST['code']),
+        htmlspecialchars($_POST['code'],ENT_QUOTES,'UTF-8',true),
         htmlspecialchars(intval($_POST['countryId'])),
         0 ); // pour Vivant par defaut
 
@@ -112,8 +123,10 @@ if (isset($_POST['specialityUpdated']) )
             $AgentManager->addSpecialityToAgent($_POST['AgentId'],$value); 
         }
     } ;
-
-    header("Location: ?entity=agents&id=".$_POST['AgentId']."&action=edit");
+    $redirection=" ?entity=agents&id=".$_POST['AgentId']."&action=edit&missionId=".$_POST['missionId'];
+    //echo $redirection;die;
+    //header("Location : ".$redirection,true);
+    header("Location: ".$_POST['returnTo']);
 }
 
 

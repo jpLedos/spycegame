@@ -85,4 +85,22 @@ class TargetManager extends Manager
 
         return $req;
     }
+
+    
+     //retourne en texte les missions de l'agent
+     function getMissionsFromTarget($targetId)
+     {
+         $db = $this->dbConnect();
+         $sql="SELECT missionId, title  FROM missions_targets
+         INNER JOIN missions
+         ON missions_targets.missionId = missions.id
+         WHERE targetId = ".$targetId;
+ 
+        //echo($sql);die;
+         $req = $db->prepare($sql);
+         $req->execute();
+ 
+         return $req;
+     }
+
 }

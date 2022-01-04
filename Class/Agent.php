@@ -9,10 +9,11 @@ class Agent
     private string $code;
     private int $countryId;
     private bool $isDead;
+    private bool $isConform;
  
     
     public function __construct ($firstname=null, $lastname=null, $dateOfBirth=null,$code=null,
-                                $countryId=null,$isDead=null) 
+                                $countryId=null,$isDead=null,$isConform=false) 
     {
         if (func_get_args() != null) {
             $this->firstname = $firstname;
@@ -21,6 +22,7 @@ class Agent
             $this->code = $code;
             $this->countryId = $countryId;
             $this->isDead = $isDead;
+            $this->isConform = $isConform;
         }
     }
 
@@ -86,6 +88,18 @@ class Agent
     public function setIsDead(int $isDead): self
     {
         $this->isDead = $isDead;
+
+        return $this;
+    }
+
+    public function getIsConform(): int
+    {
+        return (int) $this->isConform;
+    }
+
+    public function setIsConform(int $isConform): self
+    {
+        $this->isConform = $isConform;
 
         return $this;
     }

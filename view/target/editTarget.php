@@ -26,15 +26,15 @@ if($target) {
             </tr>
             <tr>
                 <th><label for="lastname">Nom</label></th>
-                <td><input  type = "text" id="lastname" name="lastname"  value="<?=  htmlspecialchars($target->getLastName()); ?>"></td>
+                <td><input  type = "text" id="lastname" name="lastname"  value="<?=  $target->getLastName(); ?>"></td>
             </tr>
             <tr>
                 <th><label for="firstname">Prenom</th>
-                <td><input type="text" id ="firstname" name="firstname" value="<?= htmlspecialchars($target->getFirstname());  ?>"></td>
+                <td><input type="text" id ="firstname" name="firstname" value="<?= $target->getFirstname();  ?>"></td>
             </tr>
             <tr>
                 <th><label for="code">Code</th>
-                <td><input type="text" id ="code" name="code" value="<?= htmlspecialchars($target->getcode());  ?>"></td>
+                <td><input type="text" id ="code" name="code" value="<?= $target->getcode();  ?>"></td>
             </tr>
             <tr>
                 <th><label for="countryId" >Pays</th>
@@ -64,14 +64,33 @@ if($target) {
                             id="isDead" 
                             name="isDead" <?= $target->getIsDead() ? 'checked':''  ?>checked> (coché = vivant)</td>
             </tr>
+            <tr>
+            <th>Missions</th>
+            <td>
+                <ul>
+                <?php 
+                while ($mission = $targetMissions->fetch(PDO::FETCH_ASSOC)) {  
+                ?>
+                    <li><?= $mission['title']; ?> </li>
+                <?php  
+                } 
+                ?> 
+                </ul>
+            </td>
+        </tr>
         </table>
         <button type="submit" name="targetUpdate"class="btn btn-primary">Enregistrer</button>
     </form>
 
 
     <ul class="mt-5">
-        <li><a href=<?= '?entity=targets&id='.$target->getId().'&action=edit' ?>>edit</a></li>
-        <li><a href=<?= '?entity=targets&id='.$target->getId().'&action=delete' ?>>delete</a></li>
+        <?php if($targetMissions->rowCount()==0) { ?>
+            <li>
+                <a href=<?= '?entity=targets&id='.$target->getId().'&action=delete' ?>
+                    onclick="return confirm('Etes vous sur de vouloir effectuer la suppression ?')">
+                    <img class="picto" title= "delete" src="./asset/image/bin.png" alt="bin icon"></a>
+            </li>
+        <?php } ?>
         <li><a href=<?= '?entity=targets' ?>>retour à la liste</a></li>
     </ul>   
 
@@ -81,4 +100,5 @@ if($target) {
 <?php 
 $showTarget->closeCursor();
 $content = ob_get_clean();
+$script="<script src='./scripts/no-script.js'></script>";
 require('view/layout.php'); ?>

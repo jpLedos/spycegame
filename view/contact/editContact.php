@@ -27,15 +27,15 @@ if($Contact) {
             </tr>
             <tr>
                 <th><label for="lastname">Nom</label></th>
-                <td><input  type = "text" id="lastname" name="lastname"  value="<?=  htmlspecialchars($Contact->getLastName()); ?>"></td>
+                <td><input  type = "text" id="lastname" name="lastname"  value="<?=  $Contact->getLastName(); ?>"></td>
             </tr>
             <tr>
                 <th><label for="firstname">Prenom</th>
-                <td><input type="text" id ="firstname" name="firstname" value="<?= htmlspecialchars($Contact->getFirstname());  ?>"></td>
+                <td><input type="text" id ="firstname" name="firstname" value="<?= $Contact->getFirstname();  ?>"></td>
             </tr>
             <tr>
                 <th><label for="code">Code</th>
-                <td><input type="text" id ="code" name="code" value="<?= htmlspecialchars($Contact->getcode());  ?>"></td>
+                <td><input type="text" id ="code" name="code" value="<?= $Contact->getcode();  ?>"></td>
             </tr>
             <tr>
                 <th><label for="countryId" >Pays</th>
@@ -65,14 +65,33 @@ if($Contact) {
                             id="isDead" 
                             name="isDead" <?= $Contact->getIsDead() ? 'checked':''  ?>checked> (coché = vivant)</td>
             </tr>
+            <tr>
+            <th>Missions</th>
+            <td>
+                <ul>
+                <?php 
+                while ($mission = $contactMissions->fetch(PDO::FETCH_ASSOC)) {  
+                ?>
+                    <li><?= $mission['title']; ?> </li>
+                <?php  
+                } 
+                ?> 
+                </ul>
+            </td>
+        </tr>
         </table>
         <button type="submit" name="contactUpdate"class="btn btn-primary">Enregistrer</button>
     </form>
 
 
     <ul class="mt-5">
-        <li><a href=<?= '?entity=contacts&id='.$Contact->getId().'&action=edit' ?>>edit</a></li>
-        <li><a href=<?= '?entity=contacts&id='.$Contact->getId().'&action=delete' ?>>delete</a></li>
+        <?php if($contactMissions->rowCount()==0) { ?>
+            <li>
+                <a href=<?= '?entity=contacts&id='.$Contact->getId().'&action=delete' ?>
+                    onclick="return confirm('Etes vous sur de vouloir effectuer la suppression ?')">
+                    <img class="picto" title= "delete" src="./asset/image/bin.png" alt="bin icon"></a>
+            </li>
+        <?php } ?>
         <li><a href=<?= '?entity=contacts' ?>>retour à la liste</a></li>
     </ul>   
 
@@ -82,4 +101,5 @@ if($Contact) {
 <?php 
 $showContact->closeCursor();
 $content = ob_get_clean();
+$script="<script src='./scripts/no-script.js'></script>";
 require('view/layout.php'); ?>

@@ -7,9 +7,26 @@ $countryManager = new CountryManager();
 $typeManager = new TypeManager(); 
 $specialityManager = new SpecialityManager(); 
 $statutManager = new StatutManager(); 
-?> 
 
-<table class="table table-hover">
+$where="";
+if(isset($_POST['filter'])) {
+    $where = ($_POST['where']);
+}
+?>
+
+<form action="?entity=missions&action=none" class="container" method="post" >
+    <div class="input-group px-5 mx-5 mb-3 ">
+        <input type="text" 
+                class="form-control form-control-lg" 
+                name="where" 
+                placeholder="Recherche dans Titre et Code..."
+                value= <?=$where; ?> >
+        <button type="submit" name="filter" class="input-group-text btn-success">
+        <i class="bi bi-search me-2"></i> Search</button>
+    </div>
+</form>
+
+<table class="table table-hover ">
     <thead>
         <tr class="bg-light">
             <th>N°</span>   
@@ -39,32 +56,52 @@ $statutManager = new StatutManager();
         $showStatut = $statutManager->getStatut($mission->getStatutId());
         $statut = $showStatut->fetchObject('Statut');
     ?>
-        <tr class=" ">
-            <th scope="row"><?=  $mission->getId(); ?></th>   
-            <td><?=  htmlspecialchars($mission->getTitle()); ?></td>
-            <td><em> <?= htmlspecialchars($mission->getCode()); ?></em></td>
-            <td><?= $statut->getStatut(); ?></td>
+        <tr class="line-mission">
+            <th scope="row"><?=  $mission->getId(); ?></th>
+            <td class="isConform" style=display:none><?=$mission->getIsConform(); ?></td>  
+            <td><?=  $mission->getTitle(); ?></td>
+            <td><em> <?= $mission->getCode(); ?></em></td>
+            <td class="statut"><?= $statut->getStatut(); ?></td>
             <td><?= $type->getType(); ?></td>
             <td><?= $speciality->getSpeciality(); ?></td>
             <td><?= $country->getFullname(); ?></td>
-            <td class ="bg-light text-center"><a href=<?= '?entity=missions&id='.$mission->getId().'&action=show' ?>>show</a></td>
+            <td class ="bg-light">
+                <a href=<?= '?entity=missions&id='.$mission->getId().'&action=show' ?>>
+                    <img class="picto" src="./asset/image/view.png" alt="show icon"></a>
+                <?php 
+                if (isset($_SESSION["ADMIN"]) && $_SESSION["ADMIN"] == "yes") {
+                    if ($mission->getStatutId()<3) {
+                ?>
+                    <a href=<?= '?entity=missions&id='.$mission->getId().'&action=edit' ?>>
+                        <img class="picto" src="./asset/image/edition.png" alt="edit icon"></a>
+                    <a  href=<?= '?entity=missions&id='.$mission->getId().'&action=delete' ?>
+                        onclick="return confirm('Etes vous sur de vouloir effectuer la suppression ?')">
+                        <img class="picto" src="./asset/image/bin.png" alt="bin icon"></a>
+                <?php 
+                    }    
+                } 
+                ?>
+            </td>
+
         </tr>
     <?php
     }
 
     $listMissions->closeCursor();
-    $showCountry->closeCursor();
-    $showType->closeCursor();
-    $showSpeciality->closeCursor();
 
     ?>
     </tbody>
 </table>
-
+<?php if (isset($_SESSION["ADMIN"]) && $_SESSION["ADMIN"] == "yes") {
+?>
 <ul class="mt-5">
     <li><a href=<?= '?entity=missions&action=new' ?>>Creer une nouvelle Mission</a></li>
-</ul> 
+</ul>
+<?php 
+} 
+?> 
 
-<?php $content = ob_get_clean(); ?>
-
-<?php require('view/layout.php'); ?>
+<?php 
+$content = ob_get_clean(); 
+$script="<script src='./scripts/listMissions.js'></script>";
+ require('view/layout.php'); ?>

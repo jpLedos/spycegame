@@ -59,7 +59,7 @@ $returnToUrl = $_SERVER['HTTP_REFERER'];
 
 
         </table>
-        <button type="submit" name="submit"class="btn btn-primary">Enregistrer</button>
+        <button type="submit" name="hideawayAdd"class="btn btn-primary">Enregistrer</button>
     </form>
 
   
@@ -71,6 +71,6 @@ $returnToUrl = $_SERVER['HTTP_REFERER'];
 
 
 <?php 
-
 $content = ob_get_clean();
+$script="<script src='./scripts/no-script.js'></script>";
 require('view/layout.php'); ?>

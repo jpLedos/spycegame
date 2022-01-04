@@ -5,22 +5,26 @@ require_once('model/SpecialityManager.php');
 function listSpecialities() 
 {
     //echo(' dans Speciality controller)');
-    $SpecialityManager = new SpecialityManager(); // Création d'un objet
-    $listSpecialities = $SpecialityManager->getSpecialities(); // Appel d'une fonction de cet objet
+    $SpecialityManager = new SpecialityManager(); 
+    $listSpecialities = $SpecialityManager->getSpecialities(); 
     require('view/Speciality/listSpecialities.php');
 }
 
 function showSpeciality(int $id)
 {
-    $SpecialityManager = new SpecialityManager(); // Création d'un objet
-    $showSpeciality = $SpecialityManager->getSpeciality($id); // Appel d'une fonction de cet objet
+    $SpecialityManager = new SpecialityManager(); 
+    $showSpeciality = $SpecialityManager->getSpeciality($id); 
+    $specialityMissions = $SpecialityManager->getMissionsFromSpeciality($id);
+    $specialityAgents = $SpecialityManager->getAgentsFromspeciality($id);
     require('view/Speciality/showSpeciality.php');
 }
 
 function editSpeciality(int $id)
 {
-    $SpecialityManager = new SpecialityManager(); // Création d'un objet
-    $showSpeciality = $SpecialityManager->getSpeciality($id); // Appel d'une fonction de cet objet
+    $SpecialityManager = new SpecialityManager(); 
+    $showSpeciality = $SpecialityManager->getSpeciality($id); 
+    $specialityMissions = $SpecialityManager->getMissionsFromSpeciality($id);
+    $specialityAgents = $SpecialityManager->getAgentsFromspeciality($id);
     require('view/Speciality/editSpeciality.php');
 }
 
@@ -31,30 +35,36 @@ function newSpeciality()
 
 function deleteSpeciality(int $id)
 {
-    $SpecialityManager = new SpecialityManager(); // Création d'un objet
-    $deleteSpeciality = $SpecialityManager->deleteSpeciality($id); // Appel d'une fonction de cet objet
+    $SpecialityManager = new SpecialityManager(); 
+    $specialityMissions = $SpecialityManager->getMissionsFromSpeciality($id);
+    $specialityAgents = $SpecialityManager->getAgentsFromspeciality($id);
+    if($specialityMissions->rowCount()==0 && $specialityAgents->rowCount()==0) {
+    $deleteSpeciality = $SpecialityManager->deleteSpeciality($id); 
     header("Location: ?entity=specialities");
+    } else {
+        echo("Une specialité appartenant à des missions ou des agents ne peut être supprimée !");
+    }
 }
 
 
 // traitement update
 
-if (isset($_POST['SpecialityId']) && $_POST['SpecialityId']<> 0 ) 
+if (isset($_POST['SpecialityId']) && $_POST['SpecialityId']<> 0 && isset($_POST['specialityUpdate'])) 
 {
     $updatedSpeciality = new Speciality(
-        htmlspecialchars($_POST['speciality']),
+        htmlspecialchars($_POST['speciality'],ENT_QUOTES,'UTF-8',true),
     );
     
-    $SpecialityManager = new SpecialityManager(); // Création d'un objet
+    $SpecialityManager = new SpecialityManager(); 
     $SpecialityManager->writeSpeciality($updatedSpeciality);
     header("Location: ?entity=specialities&id=".$_POST['SpecialityId']."&action=show");
 }
 
 
 // traitement Ajout
-if (isset($_POST['SpecialityId']) && $_POST['SpecialityId']== 0 ) 
+if (isset($_POST['SpecialityId']) && $_POST['SpecialityId']== 0 && isset($_POST['specialityAdd'])) 
 {
-    $newSpeciality = new Speciality(htmlspecialchars($_POST['speciality']));
+    $newSpeciality = new Speciality(htmlspecialchars($_POST['speciality'],ENT_QUOTES,'UTF-8',true));
     $SpecialityManager = new SpecialityManager(); // Création d'un objet
     $SpecialityManager->postSpeciality($newSpeciality);
     header("Location: ".$_POST['returnTo']);

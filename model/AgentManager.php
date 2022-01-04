@@ -9,7 +9,7 @@ class AgentManager extends Manager
     {
         $db = $this->dbConnect();
         $sql="SELECT Agents.id, Agents.lastname,Agents.firstname, Agents.code, Agents.isDead,
-        Agents.countryId
+        Agents.countryId, Agents.isConform
         FROM Agents";
         $req = $db->prepare($sql);
         $req->execute();
@@ -24,7 +24,7 @@ class AgentManager extends Manager
         }
         $db = $this->dbConnect();
         $sql="SELECT Agents.id, Agents.lastname,Agents.firstname, Agents.code, Agents.isDead,
-        Agents.countryId, Agents.dateOfBirth
+        Agents.countryId, Agents.dateOfBirth, Agents.isConform
         FROM Agents
         WHERE Agents.id = ?";
         $req = $db->prepare($sql);
@@ -44,9 +44,10 @@ class AgentManager extends Manager
         Agents.code= '".$updatedAgent->getCode()."',
         Agents.isDead='". $updatedAgent->getIsDead()."',
         Agents.countryId=". intval($updatedAgent->getCountryId()).",
-        Agents.dateOfBirth= '".$updatedAgent->getDateOfBirth()."'
+        Agents.dateOfBirth= '".$updatedAgent->getDateOfBirth()."',
+        Agents.isConform = ".$updatedAgent->getIsConform()."
         WHERE Agents.id = ?";
-
+        //echo $sql;die;
         $req = $db->prepare($sql);
         $req->bindValue(1, ($_POST['AgentID']), PDO::PARAM_STR);
         $req->execute();
@@ -57,13 +58,14 @@ class AgentManager extends Manager
     function postAgent($newAgent)
     {
         $db = $this->dbConnect();
-        $sql=  "INSERT INTO Agents ( lastname, firstname,code, countryId, isDead, dateOfBirth)
+        $sql=  "INSERT INTO Agents ( lastname, firstname,code, countryId, isDead, isConform, dateOfBirth)
         Value ('".
         $newAgent->getLastName()."','".
         $newAgent->getFirstName()."','".
         $newAgent->getCode()."','".
         intval($newAgent->getCountryId())."','".
         $newAgent->getIsDead()."','".
+        $newAgent->getIsConform()."','".
         $newAgent->getDateOfBirth()."');";
 
         $req = $db->prepare($sql);
@@ -134,4 +136,21 @@ class AgentManager extends Manager
 
         return $req;
     }
+
+     //retourne en texte les missions de l'agent
+     function getMissionsFromAgent($agentId)
+     {
+         $db = $this->dbConnect();
+         $sql="SELECT missionId, title  FROM missions_agents
+         INNER JOIN missions
+         ON missions_agents.missionId = missions.id
+         WHERE agentId = ".$agentId;
+ 
+        //echo($sql);die;
+         $req = $db->prepare($sql);
+         $req->execute();
+ 
+         return $req;
+     }
+
 }

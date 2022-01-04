@@ -27,11 +27,11 @@ if($Hideaway) {
             </tr>
             <tr>
                 <th><label for="code">Code</label></th>
-                <td><input  type = "text" id="code" name="code"  value="<?=  htmlspecialchars($Hideaway->getCode()); ?>"></td>
+                <td><input  type = "text" id="code" name="code"  value="<?= $Hideaway->getCode(); ?>"></td>
             </tr>
             <tr>
                 <th><label for="address">address</th>
-                <td><input type="text" id ="address" name="address" value="<?= htmlspecialchars($Hideaway->getAddress());   ?>"></td>
+                <td><input type="text" id ="address" name="address" value="<?= $Hideaway->getAddress();   ?>"></td>
             </tr>
             <tr>
                 <th><label for="countryId" >Pays</th>
@@ -63,14 +63,33 @@ if($Hideaway) {
                 ?>    
                 </td>
             </tr>
+            <tr>
+            <th>Missions</th>
+            <td>
+                <ul>
+                <?php 
+                while ($mission = $hideawayMissions->fetch(PDO::FETCH_ASSOC)) {  
+                ?>
+                    <li><?= $mission['title']; ?> </li>
+                <?php  
+                } 
+                ?> 
+                </ul>
+            </td>
+        </tr>    
         </table>
-        <button type="submit" name="submit"class="btn btn-primary">Enregistrer</button>
+        <button type="submit" name="hideawayUpdate"class="btn btn-primary">Enregistrer</button>
     </form>
 
 
     <ul class="mt-5">
-        <li><a href=<?= '?entity=hideaways&id='.$Hideaway->getId().'&action=edit' ?>>edit</a></li>
-        <li><a href=<?= '?entity=hideaways&id='.$Hideaway->getId().'&action=delete' ?>>delete</a></li>
+        <?php if($hideawayMissions->rowCount()==0) { ?>
+            <li>
+                <a href=<?= '?entity=hideaways&id='.$Hideaway->getId().'&action=delete' ?>
+                    onclick="return confirm('Etes vous sur de vouloir effectuer la suppression ?')">
+                    <img class="picto" title= "delete" src="./asset/image/bin.png" alt="bin icon"></a>
+            </li>
+        <?php } ?>
         <li><a href=<?= '?entity=hideaways' ?>>retour à la liste</a></li>
     </ul>   
 
@@ -80,4 +99,5 @@ if($Hideaway) {
 <?php 
 $showHideaway->closeCursor();
 $content = ob_get_clean();
+$script="<script src='./scripts/no-script.js'></script>";
 require('view/layout.php'); ?>

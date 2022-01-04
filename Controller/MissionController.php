@@ -13,6 +13,7 @@ require_once('model/ContactManager.php'); // pour les contacts
 require_once('model/HideawayManager.php'); // pour les planques
 require_once('model/HydeawayTypeManager.php'); // pour les type de planques
 
+
 require_once('Controller/MissionAgentsController.php');
 require_once('Controller/MissionTargetsController.php');
 require_once('Controller/MissionContactsController.php');
@@ -22,16 +23,15 @@ require_once('Controller/MissionHideawaysController.php');
 // liste des mission ______________________________________________________
 function listMissions() 
 {
-    //echo(' dans Mission controller)');
-    $MissionManager = new MissionManager(); // Création d'un objet
-    $listMissions = $MissionManager->getMissions(); // Appel d'une fonction de cet objet
+    $MissionManager = new MissionManager(); 
+    $listMissions = $MissionManager->getMissions(""); 
     require('view/Mission/listMissions.php');
 }
 
 //  detail d'un mission ___________________________________________________
 function showMission(int $Id)
 {
-    $MissionManager = new MissionManager(); // Création d'un objet
+    $MissionManager = new MissionManager(); 
     $showMission = $MissionManager->getMission($Id); 
     $missionAgents = $MissionManager->getAgentsFromMission($Id);
     $missionTargets = $MissionManager->getTargetsFromMission($Id);
@@ -42,66 +42,99 @@ function showMission(int $Id)
 
 
 // DELETE un mission ______________________________________________________
-function deleteMission(int $id)
+function deleteMission(int $Id)
 {
-    $MissionManager = new MissionManager(); // Création d'un objet
-    $deleteMission = $MissionManager->deleteMission($id); // Appel d'une fonction de cet objet
+    $MissionManager = new MissionManager();
+    $showMission = $MissionManager->getMission($Id);
+    $mission = $showMission->fetchObject('Mission');
+    if ($mission->getStatutId()<3){
+    $deleteMission = $MissionManager->deleteMission($Id); 
     header("Location: ?entity=missions");
+    } else {
+        echo('une mission terminée ne peut être supprimée !!!');
+    }
 }
 
 // prepare l'update d'un mission ___________________________________________________
 function editMission(int $Id)
 {
-    $MissionManager = new MissionManager(); // Création d'un objet
-    $showMission = $MissionManager->getMission($Id); // Appel d'une fonction de cet objet
-    $missionAgents = $MissionManager->getAgentsFromMission($Id);
-    $missionTargets = $MissionManager->getTargetsFromMission($Id);
-    $missionContacts = $MissionManager->getContactsFromMission($Id);
-    $missionHideaways = $MissionManager->getHideawaysFromMission($Id);
-    require('view/Mission/editMission.php');
+    $MissionManager = new MissionManager(); 
+    $showMission = $MissionManager->getMission($Id); 
+    $mission = $showMission->fetchObject('Mission');
+    if($mission) {
+        if ($mission->getStatutId()<3){
+        $missionAgents = $MissionManager->getAgentsFromMission($Id);
+        $missionTargets = $MissionManager->getTargetsFromMission($Id);
+        $missionContacts = $MissionManager->getContactsFromMission($Id);
+        $missionHideaways = $MissionManager->getHideawaysFromMission($Id);
+        require('view/Mission/editMission.php');
+        }else {
+            echo('une mission terminée ne peut plus être éditée !!!');
+        }
+    }else {
+        echo('Aucun resultat pour cette requête !');
+    }
 }
 
 
 // update  mission traitement du formulaire _________________________________________
 if (isset($_POST['MissionId']) && $_POST['MissionId']<> 0 && isset($_POST['missionUpdate'])) 
 {
+    if ($_POST['isConform']==1) {
+        $statut = $_POST['statutId'];
+    }else {
+        $statut = 1;
+    }
     $updatedMission = new Mission(
-        htmlspecialchars($_POST['title']),
-        htmlspecialchars($_POST['descriptions']),
-        htmlspecialchars($_POST['code']), 
+        htmlspecialchars($_POST['title'],ENT_QUOTES,'UTF-8',true),
+        htmlspecialchars($_POST['descriptions'],ENT_QUOTES,'UTF-8',true),
+        htmlspecialchars($_POST['code'],ENT_QUOTES,'UTF-8',true), 
         htmlspecialchars($_POST['countryId']),
         htmlspecialchars($_POST['typeId']),
-        htmlspecialchars($_POST['statutId']),
+        htmlspecialchars($statut),
         htmlspecialchars($_POST['specialityId']),
         htmlspecialchars($_POST['startDate']),
-        htmlspecialchars($_POST['endDate'])
+        htmlspecialchars($_POST['endDate']),
+        $_POST['isConform']
     );
     
-    $MissionManager = new MissionManager(); // Création d'un objet
+    $MissionManager = new MissionManager(); 
     $MissionManager->writeMission($updatedMission);
-    header("Location: ?entity=missions&id=".$_POST['MissionId']."&action=show");
+    header("Location: ?entity=missions");
 }
 
 
-// affiche formulaire Ajout d'un mission ___________________________________________________
+// _______________ formulaire Ajout d'un mission ___________________________________________________
 function newMission()
 {
     require('view/Mission/newMission.php');
 }
 
 // traitement du formulaire Ajout d'une mission  _________________________________________
-if (isset($_POST['MissionID']) && $_POST['MissionID']== 0 && isset($_POST['MissionAdd'])) 
+if (isset($_POST['missionId']) && $_POST['missionId']== 0 && isset($_POST['MissionAdd'])) 
 {
     $newMission = new Mission(
-        htmlspecialchars($_POST['firstname']),
-        htmlspecialchars($_POST['lastname']),
-        htmlspecialchars($_POST['dateOfBirth']),
-        htmlspecialchars($_POST['code']),
-        htmlspecialchars(intval($_POST['countryId'])),
-        0 ); // pour Vivant par defaut
+        htmlspecialchars($_POST['title'],ENT_QUOTES,'UTF-8',true),
+        htmlspecialchars($_POST['descriptions'],ENT_QUOTES,'UTF-8',true),
+        htmlspecialchars($_POST['code'],ENT_QUOTES,'UTF-8',true), 
+        htmlspecialchars($_POST['countryId']),
+        htmlspecialchars($_POST['typeId']),
+        htmlspecialchars(1),                  //en preparation par defaut
+        htmlspecialchars($_POST['specialityId']),
+        htmlspecialchars($_POST['startDate']),
+        htmlspecialchars($_POST['endDate'])
+    );
 
-    $MissionManager = new MissionManager(); // Création d'un objet
+    $MissionManager = new MissionManager(); 
     $MissionManager->postMission($newMission);
+}
+
+if (isset($_POST['filter']))
+{
+    $filter = htmlspecialchars($_POST['where']);
+    $MissionManager = new MissionManager(); 
+    $listMissions = $MissionManager->getMissions("$filter"); 
+    require('view/Mission/listMissions.php');
 }
 
 

@@ -32,12 +32,17 @@ if($mission) {
             <?php
             while  ($hideaway = $listHideaways->fetchObject('Hideaway'))
             {
+                $showHideawayCountry = $countryManager->getCountry($hideaway->getCountryId()); 
+                $hideawayCountry = $showHideawayCountry->fetchObject('Country');
             ?>
             <tr class=''>
                 <th scope="row"><?=  $hideaway->getId(); ?></th>           
                 <td>
                     <label for=<?=  $hideaway->getId(); ?>>
-                        <?= htmlspecialchars($hideaway->getFullname()); ?>
+                        <?= $hideaway->getFullname(); ?>
+                        <div class="details">    
+                        <p>Pays :<?= $hideawayCountry->getFullName() ?></p>
+                        <div>
                     </label>
                 </td>
                 <td>
@@ -48,6 +53,9 @@ if($mission) {
                         name="toBeAdded.<?= $hideaway->getId(); ?>."
                         name="toBeAdded.<?= $hideaway->getId(); ?>."
                         <?= !getIsMissionHideaway($_GET['id'],$hideaway->getId()) ? 'checked':''  ?>checked />
+                </td>
+                <td><a href=<?= '?entity=hideaways&id='.$hideaway->getId().'&action=edit' ?>>
+                    <img class="picto" title= "edit" src="./asset/image/edition.png" alt="edit icon"></a>
                 </td>
             </tr>
             <?php
@@ -64,6 +72,7 @@ if($mission) {
 </div>
 
 
-<?php $content = ob_get_clean(); ?>
-
-<?php require('view/layout.php'); ?>
+<?php $content = ob_get_clean();
+$script="<script src='./scripts/no-script.js'></script>";
+require('view/layout.php'); 
+?>

@@ -14,7 +14,7 @@ ob_start();
                 <td><input  type = "text" id="type" name="type"  placeholder ="entrez le type" required></td>
             </tr>
         </table>
-        <button type="submit" name="submit"class="btn btn-primary">Enregistrer</button>
+        <button type="submit" name="typeAdd"class="btn btn-primary">Enregistrer</button>
     </form>
 
   
@@ -28,4 +28,5 @@ ob_start();
 <?php 
 
 $content = ob_get_clean();
+$script="<script src='./scripts/no-script.js'></script>";
 require('view/layout.php'); ?>

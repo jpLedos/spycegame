@@ -68,9 +68,24 @@ class typeManager extends Manager
         $sql="DELETE FROM types WHERE id = ".$id.";";
 
         $req = $db->prepare($sql);
+        
         $req->execute();
 
         return $req;
 
+    }
+
+    //retourne en texte les missions de  ce type
+    function getMissionsFromType($typeId)
+    {
+        $db = $this->dbConnect();
+        $sql="SELECT typeId, title  FROM missions
+        WHERE typeId = ".$typeId;
+
+       //echo($sql);die;
+        $req = $db->prepare($sql);
+        $req->execute();
+
+        return $req;
     }
 }

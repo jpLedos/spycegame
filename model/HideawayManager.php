@@ -79,4 +79,21 @@ class HideawayManager extends Manager
 
         return $req;
     }
+
+         //retourne en texte les missions de l'agent
+         function getMissionsFromHideaway($hideawayId)
+         {
+             $db = $this->dbConnect();
+             $sql="SELECT missionId, title  FROM missions_hideaways
+             INNER JOIN missions
+             ON missions_hideaways.missionId = missions.id
+             WHERE hideawayId = ".$hideawayId;
+     
+            //echo($sql);die;
+             $req = $db->prepare($sql);
+             $req->execute();
+     
+             return $req;
+         }
+
 }

@@ -1,11 +1,13 @@
 <?php
+
 // formmulaire de gestion des agents de la mission _____________________________________
 function editAgents($Id) 
 {
-    $MissionManager = new MissionManager(); // Création d'un objet
-    $showMission = $MissionManager->getMission($Id); // Appel d'une fonction de cet objet
-    $agentManager = new AgentManager(); // Création d'un objet
-    $listAgents = $agentManager->getAgents(); // Appel d'une fonction de cet objet
+    $MissionManager = new MissionManager(); 
+    $showMission = $MissionManager->getMission($Id); 
+    $agentManager = new AgentManager(); 
+    $listAgents = $agentManager->getAgents(); 
+    $SpecialityManager = new SpecialityManager();
     require('view/Mission/listMissionAgents.php');
 }
 

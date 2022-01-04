@@ -6,8 +6,10 @@ $mission = $showMission->fetchObject('mission');
 if($mission) {
     $titleh2 = "<h2>Agents de la mission ".$mission->getCode()." ".$mission->getTitle()."</h2>";
 
-    $countryManager = new CountryManager(); // Création d'un objet'
-    $showCountry = $countryManager->getCountry($mission->getCountryId());// Appel d'une fonction de cet objet
+    $countryManager = new CountryManager(); 
+    $showCountry = $countryManager->getCountry($mission->getCountryId());
+    $showSpeciality = $SpecialityManager->getSpeciality($mission->getSpecialityId());
+    $speciality = $showSpeciality->fetchObject('Speciality');
     $country = $showCountry->fetchObject('Country'); 
     $returnTo = $_SERVER['HTTP_REFERER'];
     
@@ -16,7 +18,8 @@ if($mission) {
     die;
 }
 ?> 
-
+<p>Selection agents pour une mission destination :  <?= $country->getFullName()?><br>
+    Specialité requise : <?= $speciality->getSpeciality()?></p>
 <div class="container-fluid m-5">
     <form method="post" action="index.php?entity=missions">   
     <input id="missionId" name="missionId" type="hidden" value="<?=  $_GET['id']; ?>">
@@ -32,15 +35,27 @@ if($mission) {
             <?php
             while  ($agent = $listAgents->fetchObject('Agent'))
             {
+                $showAgentCountry = $countryManager->getCountry($agent->getCountryId()); 
+                $agentCountry = $showAgentCountry->fetchObject('Country');
+                $showAgentSpecialities = $agentManager->getSpecialitiesFromAgent($agent->getId());
+
             ?>
             <tr class=''>
                 <th scope="row"><?=  $agent->getId(); ?></th>   
-                <td>
-                    <label for=<?=  $agent->getId(); ?>>
-                        <?= htmlspecialchars($agent->getFullname()); ?>
-                    </label>
-                </td>
-                <td>
+                <td><?= $agent->getFullName(); ?>
+                    <div class="details">    
+                        <p>Pays : <span class="agentCountry"><?= $agentCountry->getFullName() ?></span></p>
+                        <p class="agentSpecialities">Specialités :       
+                        <?php
+                        while ($agentSpeciality = $showAgentSpecialities->fetch(PDO::FETCH_ASSOC)) 
+                                {
+                                echo($agentSpeciality['speciality'].", ");
+                                }
+                        ?>
+                        </p>
+                    </div>
+                    </td>
+                    <td>
                     <input 
                         type="checkbox"
                         value=<?=  $agent->getId(); ?>
@@ -48,6 +63,9 @@ if($mission) {
                         name="toBeAdded.<?= $agent->getId(); ?>."
                         name="toBeAdded.<?= $agent->getId(); ?>."
                         <?= !getIsMissionAgent($_GET['id'],$agent->getId()) ? 'checked':''  ?>checked />
+                </td>
+                <td><a href=<?= '?entity=agents&id='.$agent->getId().'&action=edit&missionId='.$_GET['id'] ?>>
+                    <img class="picto" title= "edit" src="./asset/image/edition.png" alt="edit icon"></a>
                 </td>
             </tr>
             <?php
@@ -64,6 +82,6 @@ if($mission) {
 </div>
 
 
-<?php $content = ob_get_clean(); ?>
-
-<?php require('view/layout.php'); ?>
+<?php $content = ob_get_clean(); 
+$script="<script src='./scripts/no-script.js'></script>";
+ require('view/layout.php'); ?>

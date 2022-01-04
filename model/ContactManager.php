@@ -85,4 +85,20 @@ class ContactManager extends Manager
 
         return $req;
     }
+
+         //retourne en texte les missions du contact
+         function getMissionsFromContact($contactId)
+         {
+             $db = $this->dbConnect();
+             $sql="SELECT missionId, title  FROM missions_contacts
+             INNER JOIN missions
+             ON missions_contacts.missionId = missions.id
+             WHERE contactId = ".$contactId;
+     
+            //echo($sql);die;
+             $req = $db->prepare($sql);
+             $req->execute();
+     
+             return $req;
+         }
 }

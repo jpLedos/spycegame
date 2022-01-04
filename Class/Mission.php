@@ -12,11 +12,12 @@ class Mission
     private int $specialityId;
     private $startDate;
     private $endDate;
+    private bool $isConform;
  
     
     public function __construct($title=null, $descriptions=null, $code=null, $countryId=null, $typeId = null, 
                                 $statutId=null, $specialityId =null, 
-                                $startDate = null, $endDate= null) 
+                                $startDate = null, $endDate= null, $isConform=0) 
     {
         if (func_get_args() != null) {
             $this->title = $title;
@@ -28,6 +29,7 @@ class Mission
             $this->specialityId = $specialityId;
             $this->startDate = $startDate;
             $this->endDate = $endDate;
+            $this->isConform = $isConform;
         }
     }
 
@@ -125,7 +127,7 @@ class Mission
         return $this;
     }
 
-    public function getStartDate() :string
+    public function getStartDate() 
     {
     
         return $this->startDate;
@@ -151,5 +153,16 @@ class Mission
         return $this;
     }
 
+    public function getIsConform() : int 
+    {
+        return $this->isConform;
+    }
+
+    public function setIsConform($isConform) : self 
+    {
+        $this->isConform = $isConform;
+        
+        return $this;
+    }
 
 }

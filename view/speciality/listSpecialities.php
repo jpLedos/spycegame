@@ -22,8 +22,14 @@ $titleh2 = "<h2>Liste des Specialités</h2>";
         ?>
             <tr class=''>
             <th scope="row"><?=  $Speciality->getId(); ?></th>   
-            <td><?=  htmlspecialchars($Speciality->getSpeciality()); ?></td>
-            <td class ="bg-light text-center"><a href=<?= '?entity=specialities&id='.$Speciality->getId().'&action=show' ?>>show</a></td>
+            <td><?=  $Speciality->getSpeciality(); ?></td>
+
+            <td class ="bg-light text-center d-flex justify-content-evenly ">
+                    <a href=<?= '?entity=specialities&id='.$Speciality->getId().'&action=show' ?>>
+                        <img class="picto" title= "show" src="./asset/image/view.png" alt="show icon"></a>
+                    <a href=<?= '?entity=specialities&id='.$Speciality->getId().'&action=edit' ?>>
+                        <img class="picto" title= "edit" src="./asset/image/edition.png" alt="edit icon"></a>
+                </td>
             </tr>
         <?php
         }
@@ -37,6 +43,6 @@ $titleh2 = "<h2>Liste des Specialités</h2>";
     <li><a href=<?= '?entity=specialities&action=new' ?>>Creer une nouvelle Specialité</a></li>
 </ul> 
 
-<?php $content = ob_get_clean(); ?>
-
-<?php require('view/layout.php'); ?>
+<?php $content = ob_get_clean(); 
+$script="<script src='./scripts/no-script.js'></script>";
+require('view/layout.php'); ?>

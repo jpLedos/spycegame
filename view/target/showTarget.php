@@ -23,30 +23,43 @@ if($target) {
         </tr>
         <tr>
             <th>Nom</th>
-            <td><?=  htmlspecialchars($target->getLastName()); ?></td>
+            <td><?=  $target->getLastName(); ?></td>
         </tr>
         <tr>
             <th>Prenom</th>
-            <td><?= htmlspecialchars($target->getFirstname());  ?></td>
+            <td><?= $target->getFirstname();  ?></td>
         </tr>
         <tr>
             <th>Pays</th>
-            <td><?= htmlspecialchars($country->getFullName());  ?></td>
+            <td><?= $country->getFullName();  ?></td>
         </tr>
         <tr>
             <th>né(e) en</th>
-            <td><?= $target->getDateOfBirth();  ?> </td>
+            <td><?= date('d-m-Y',strToTime($target->getDateOfBirth()));  ?> </td>
         </tr>
         <tr>
             <th>En vie</th>
             <td><?= !$target->getIsDead()? 'Vivant': 'Décédé';  ?> </td>
+        </tr>
+        <tr>
+            <th>Missions</th>
+            <td>
+                <ul>
+                <?php 
+                while ($mission = $targetMissions->fetch(PDO::FETCH_ASSOC)) {  
+                ?>
+                    <li><?= $mission['title']; ?> </li>
+                <?php  
+                } 
+                ?> 
+                </ul>
+            </td>
         </tr>
     </table>
 
 
     <ul class="mt-5">
         <li><a href=<?= '?entity=targets&id='.$target->getId().'&action=edit' ?>>edit</a></li>
-        <li><a href=<?= '?entity=targets&id='.$target->getId().'&action=delete' ?>>delete</a></li>
         <li><a href=<?= '?entity=targets' ?>>retour à la liste</a></li>
     </ul>   
 
@@ -56,4 +69,5 @@ if($target) {
 <?php 
 $showTarget->closeCursor();
 $content = ob_get_clean();
+$script="<script src='./scripts/no-script.js'></script>";
 require('view/layout.php'); ?>

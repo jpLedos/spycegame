@@ -60,6 +60,6 @@ $returnToUrl = $_SERVER['HTTP_REFERER'];
 
 
 <?php 
-
 $content = ob_get_clean();
+$script="<script src='./scripts/no-script.js'></script>";
 require('view/layout.php'); ?>
