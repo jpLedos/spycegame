@@ -100,6 +100,7 @@ if (isset($_POST['MissionId']) && $_POST['MissionId']<> 0 && isset($_POST['missi
     
     $MissionManager = new MissionManager(); 
     $MissionManager->writeMission($updatedMission);
+    
     header("Location: ?entity=missions");
 }
 
@@ -126,7 +127,9 @@ if (isset($_POST['missionId']) && $_POST['missionId']== 0 && isset($_POST['Missi
     );
 
     $MissionManager = new MissionManager(); 
-    $MissionManager->postMission($newMission);
+    $newId=$MissionManager->postMission($newMission);
+
+    header("Location: ?entity=missions&action=edit&id=".$newId);
 }
 
 if (isset($_POST['filter']))
