@@ -86,7 +86,7 @@ class MissionManager
         $req = $db->prepare($sql);
         $req->execute();
 
-        return $req;
+        return $db->lastInsertId();
     }
 
     function deleteMission($id)
