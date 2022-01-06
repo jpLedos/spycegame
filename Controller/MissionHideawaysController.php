@@ -6,7 +6,7 @@ function editHideaways($Id)
     $showMission = $MissionManager->getMission($Id); // Appel d'une fonction de cet objet
     $hideawayManager = new HideawayManager(); // Création d'un objet
     $listHideaways = $hideawayManager->getHideaways(); // Appel d'une fonction de cet objet
-    require('view/Mission/listMissionHideaways.php');
+    require('view/mission/listMissionHideaways.php');
 }
 
 function getIsMissionHideaway($missionId, $hideawayId)

@@ -8,7 +8,7 @@ function editAgents($Id)
     $agentManager = new AgentManager(); 
     $listAgents = $agentManager->getAgents(); 
     $SpecialityManager = new SpecialityManager();
-    require('view/Mission/listMissionAgents.php');
+    require('view/mission/listMissionAgents.php');
 }
 
 function getIsMissionAgent($missionId, $agentId)

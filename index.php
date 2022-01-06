@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 if (isset($_GET['entity'])) {
     switch ($_GET['entity']) {
         case 'targets' :
@@ -8,11 +8,11 @@ if (isset($_GET['entity'])) {
         break;
 
         case 'agents':
-            require('Router/AgentRouter.php');
+            require('Router/agentRouter.php');
             break;
 
         case 'contacts':
-            require('Router/ContactRouter.php');
+            require('Router/contactRouter.php');
             break;
             
         case 'specialities':

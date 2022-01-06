@@ -1,6 +1,6 @@
 <?php
 
-require_once('model/manager.php');
+require_once('Manager.php');
 require_once('Class/User.php');
 
 class UserManager extends Manager
@@ -8,7 +8,7 @@ class UserManager extends Manager
 
     function getUser(string $login)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT users.id, users.login,users.password
         FROM Users
         WHERE Users.login = ?";

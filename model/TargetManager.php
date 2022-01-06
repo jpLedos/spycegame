@@ -1,13 +1,13 @@
 <?php
 
-require_once('model/manager.php');
+require_once('Manager.php');
 require_once('Class/Target.php');
 
 class TargetManager extends Manager
 {
     function getTargets()
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT targets.id, targets.lastname,targets.firstname, targets.code, targets.isDead,
         targets.countryId
         FROM targets";
@@ -21,7 +21,7 @@ class TargetManager extends Manager
         if(!isset($id)){
             $id=$_GET['id'];
         }
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT targets.id, targets.lastname,targets.firstname, targets.code, targets.isDead,
         targets.countryId, targets.dateOfBirth
         FROM targets
@@ -38,7 +38,7 @@ class TargetManager extends Manager
 
     function writeTarget($updatedTarget)
      {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql = "UPDATE targets SET 
         targets.lastname ='".$updatedTarget->getLastName()."',
         targets.firstname= '".$updatedTarget->getFirstname()."', 
@@ -58,7 +58,7 @@ class TargetManager extends Manager
 
     function postTarget($newTarget)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql=  "INSERT INTO targets ( lastname, firstname,code, countryId, isDead, dateOfBirth)
         Value ('".
         $newTarget->getLastName()."','".
@@ -77,7 +77,7 @@ class TargetManager extends Manager
 
     function deleteTarget($id)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="DELETE FROM targets WHERE id = ".$id.";";
 
         $req = $db->prepare($sql);
@@ -90,7 +90,7 @@ class TargetManager extends Manager
      //retourne en texte les missions de l'agent
      function getMissionsFromTarget($targetId)
      {
-         $db = $this->dbConnect();
+         $db=Manager::dbConnect();
          $sql="SELECT missionId, title  FROM missions_targets
          INNER JOIN missions
          ON missions_targets.missionId = missions.id

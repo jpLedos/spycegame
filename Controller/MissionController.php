@@ -25,7 +25,7 @@ function listMissions()
 {
     $MissionManager = new MissionManager(); 
     $listMissions = $MissionManager->getMissions(""); 
-    require('view/Mission/listMissions.php');
+    require('view/mission/listMissions.php');
 }
 
 //  detail d'un mission ___________________________________________________
@@ -37,7 +37,7 @@ function showMission(int $Id)
     $missionTargets = $MissionManager->getTargetsFromMission($Id);
     $missionContacts = $MissionManager->getContactsFromMission($Id);
     $missionHideaways = $MissionManager->getHideawaysFromMission($Id);
-    require('view/Mission/showMission.php'); 
+    require('view/mission/showMission.php'); 
 }
 
 
@@ -67,7 +67,7 @@ function editMission(int $Id)
         $missionTargets = $MissionManager->getTargetsFromMission($Id);
         $missionContacts = $MissionManager->getContactsFromMission($Id);
         $missionHideaways = $MissionManager->getHideawaysFromMission($Id);
-        require('view/Mission/editMission.php');
+        require('view/mission/editMission.php');
         }else {
             echo('une mission terminée ne peut plus être éditée !!!');
         }
@@ -107,7 +107,7 @@ if (isset($_POST['MissionId']) && $_POST['MissionId']<> 0 && isset($_POST['missi
 // _______________ formulaire Ajout d'un mission ___________________________________________________
 function newMission()
 {
-    require('view/Mission/newMission.php');
+    require('view/mission/newMission.php');
 }
 
 // traitement du formulaire Ajout d'une mission  _________________________________________
@@ -134,7 +134,7 @@ if (isset($_POST['filter']))
     $filter = htmlspecialchars($_POST['where']);
     $MissionManager = new MissionManager(); 
     $listMissions = $MissionManager->getMissions("$filter"); 
-    require('view/Mission/listMissions.php');
+    require('view/mission/listMissions.php');
 }
 
 

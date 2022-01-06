@@ -1,23 +1,29 @@
 <?php
 
 class Manager {
+    
+    private static PDO $instance;
 
-    protected function dbConnect()
+    function __construct() {}
+    private function __clone() {}
+
+    public static function dbConnect(): PDO
     { 
+
         $host = "ble5mmo2o5v9oouq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com";
         $username = "q47ssnjajcvnxdlk";
         $password = "be2q7wrfmmc0hugd";
         $database = "un0clax84gfiuupj";
         
-        try
-        {
-            $db = new PDO('mysql:host='.$host.';dbname='.$database.';charset=utf8', $username, $password);
-            
-            return $db;
+
+        if (!isset(self::$instance)) {
+            self::$instance = new PDO('mysql:host='.$host.';dbname='.$database.';charset=utf8', $username, $password);
         }
-        catch(Exception $e)
-        {
-            die('Erreur : '.$e->getMessage());
-        }
+
+        return self::$instance;
+
     }
+
 }
+
+//$pdo = Manager::dbConnect();

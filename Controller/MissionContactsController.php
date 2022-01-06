@@ -6,7 +6,7 @@ function editContacts($Id)
     $showMission = $MissionManager->getMission($Id); 
     $contactManager = new ContactManager(); 
     $listContacts = $contactManager->getContacts(); 
-    require('view/Mission/listMissionContacts.php');
+    require('view/mission/listMissionContacts.php');
 }
 
 function getIsMissionContact($missionId, $contactId)

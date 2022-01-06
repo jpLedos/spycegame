@@ -10,7 +10,7 @@ function listAgents()
     //echo(' dans Agent controller)');
     $AgentManager = new AgentManager(); // Création d'un objet
     $listAgents = $AgentManager->getAgents(); // Appel d'une fonction de cet objet
-    require('view/Agent/listAgents.php');
+    require('view/agent/listAgents.php');
 }
 
 //  detail d'un agent ___________________________________________________
@@ -20,7 +20,7 @@ function showAgent(int $Id)
     $showAgent = $AgentManager->getAgent($Id); // Appel d'une fonction de cet objet
     $agentSpecialities = $AgentManager->getSpecialitiesFromAgent($Id);
     $agentMissions = $AgentManager->getMissionsFromAgent($Id);
-    require('view/Agent/showAgent.php');
+    require('view/agent/showAgent.php');
 
     
 }
@@ -46,7 +46,7 @@ function editAgent(int $Id)
     $showAgent = $AgentManager->getAgent($Id); // Appel d'une fonction de cet objet
     $agentSpecialities = $AgentManager->getSpecialitiesFromAgent($Id);
     $agentMissions = $AgentManager->getMissionsFromAgent($Id);
-    require('view/Agent/editAgent.php');
+    require('view/agent/editAgent.php');
 }
 
 
@@ -75,7 +75,7 @@ if (isset($_POST['AgentID']) && $_POST['AgentID']<> 0 && isset($_POST['agentUpda
 // affiche formulaire Ajout d'un agent ___________________________________________________
 function newAgent()
 {
-    require('view/Agent/newAgent.php');
+    require('view/agent/newAgent.php');
 }
 
 // traitement du formulaire Ajout d'agent  _________________________________________
@@ -102,7 +102,7 @@ function specialities($Id)
     $showAgent = $AgentManager->getAgent($Id); // Appel d'une fonction de cet objet
     $SpecialityManager = new SpecialityManager(); // Création d'un objet
     $listSpecialities = $SpecialityManager->getSpecialities(); // Appel d'une fonction de cet objet
-    require('view/Agent/listSpecialities.php');
+    require('view/agent/listSpecialities.php');
 }
 
 function getIsAgentSpeciality($agentId, $specialityId)

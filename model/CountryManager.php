@@ -1,14 +1,14 @@
 <?php
 
-require_once('model/manager.php');
+require_once('Manager.php');
 require_once('Class/Country.php');
 
-class CountryManager extends Manager
+class CountryManager
 {
 
     function getCountries()
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT Countries.id, Countries.name,Countries.code
         FROM Countries 
         ORDER BY countries.name ASC ;";
@@ -21,7 +21,7 @@ class CountryManager extends Manager
 
     function getCountry(int $id)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT countries.id, countries.name,countries.code
         FROM Countries
         WHERE countries.id = ?";

@@ -8,7 +8,7 @@ function listContacts()
     //echo(' dans Contact controller)');
     $ContactManager = new ContactManager(); 
     $listContacts = $ContactManager->getContacts(); 
-    require('view/Contact/listContacts.php');
+    require('view/contact/listContacts.php');
 }
 
 function showContact(int $id)
@@ -16,7 +16,7 @@ function showContact(int $id)
     $ContactManager = new ContactManager(); 
     $showContact = $ContactManager->getContact($id);
     $contactMissions = $ContactManager->getMissionsFromContact($id);  
-    require('view/Contact/showContact.php');
+    require('view/contact/showContact.php');
 }
 
 function editContact(int $id)
@@ -24,12 +24,12 @@ function editContact(int $id)
     $ContactManager = new ContactManager(); 
     $showContact = $ContactManager->getContact($id); 
     $contactMissions = $ContactManager->getMissionsFromContact($id); 
-    require('view/Contact/editContact.php');
+    require('view/contact/editContact.php');
 }
 
 function newContact()
 {
-    require('view/Contact/newContact.php');
+    require('view/contact/newContact.php');
 }
 
 function deleteContact(int $id)

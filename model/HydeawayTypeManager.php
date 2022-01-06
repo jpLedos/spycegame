@@ -1,6 +1,6 @@
 <?php
 
-require_once('model/manager.php');
+require_once('Manager.php');
 require_once('Class/HideawayType.php');
 
 class HydeawayTypeManager extends Manager
@@ -8,7 +8,7 @@ class HydeawayTypeManager extends Manager
 
     function getHideawayTypes()
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT hideawayTypes.id, hideawayTypes.name
         FROM HideawayTypes 
         ORDER BY hideawayTypes.name ASC ;";
@@ -21,7 +21,7 @@ class HydeawayTypeManager extends Manager
 
     function getHideawayType(int $id)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT hideawayTypes.id, hideawayTypes.name
         FROM HideawayTypes
         WHERE hideawayTypes.id = ?";

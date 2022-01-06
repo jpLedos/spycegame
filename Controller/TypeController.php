@@ -8,7 +8,7 @@ function listTypes()
     //echo(' dans Type controller)');
     $TypeManager = new TypeManager();
     $listTypes = $TypeManager->getTypes();
-    require('view/Type/listTypes.php');
+    require('view/type/listTypes.php');
 }
 
 function showType(int $id)
@@ -16,7 +16,7 @@ function showType(int $id)
     $TypeManager = new TypeManager(); 
     $showType = $TypeManager->getType($id);
     $typeMissions = $TypeManager->getMissionsFromType($id);
-    require('view/Type/showType.php');
+    require('view/type/showType.php');
 }
 
 function editType(int $id)
@@ -24,12 +24,12 @@ function editType(int $id)
     $TypeManager = new TypeManager();
     $showType = $TypeManager->getType($id);
     $typeMissions = $TypeManager->getMissionsFromType($id);  
-    require('view/Type/editType.php');
+    require('view/type/editType.php');
 }
 
 function newType()
 {
-    require('view/Type/newType.php');
+    require('view/type/newType.php');
 }
 
 function deleteType(int $id)

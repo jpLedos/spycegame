@@ -7,7 +7,7 @@ function listSpecialities()
     //echo(' dans Speciality controller)');
     $SpecialityManager = new SpecialityManager(); 
     $listSpecialities = $SpecialityManager->getSpecialities(); 
-    require('view/Speciality/listSpecialities.php');
+    require('view/speciality/listSpecialities.php');
 }
 
 function showSpeciality(int $id)
@@ -16,7 +16,7 @@ function showSpeciality(int $id)
     $showSpeciality = $SpecialityManager->getSpeciality($id); 
     $specialityMissions = $SpecialityManager->getMissionsFromSpeciality($id);
     $specialityAgents = $SpecialityManager->getAgentsFromspeciality($id);
-    require('view/Speciality/showSpeciality.php');
+    require('view/speciality/showSpeciality.php');
 }
 
 function editSpeciality(int $id)
@@ -25,12 +25,12 @@ function editSpeciality(int $id)
     $showSpeciality = $SpecialityManager->getSpeciality($id); 
     $specialityMissions = $SpecialityManager->getMissionsFromSpeciality($id);
     $specialityAgents = $SpecialityManager->getAgentsFromspeciality($id);
-    require('view/Speciality/editSpeciality.php');
+    require('view/speciality/editSpeciality.php');
 }
 
 function newSpeciality()
 {
-    require('view/Speciality/newSpeciality.php');
+    require('view/speciality/newSpeciality.php');
 }
 
 function deleteSpeciality(int $id)

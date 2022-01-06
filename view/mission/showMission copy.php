@@ -185,10 +185,7 @@ if($mission) {
                 </ul>
                 <div class="rules">Au moins une planque n'est pas dans le pays de la mission !</div>
             </td>
-        </tr> 
-
-
-   
+        </tr>
 
     </table>
 

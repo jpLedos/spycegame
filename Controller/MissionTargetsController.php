@@ -6,7 +6,7 @@ function editTargets($Id)
     $showMission = $MissionManager->getMission($Id); // Appel d'une fonction de cet objet
     $targetManager = new TargetManager(); // Création d'un objet
     $listTargets = $targetManager->getTargets(); // Appel d'une fonction de cet objet
-    require('view/Mission/listMissionTargets.php');
+    require('view/mission/listMissionTargets.php');
 }
 
 function getIsMissionTarget($missionId, $targetId)

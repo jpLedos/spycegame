@@ -1,14 +1,16 @@
 <?php
 
-require_once('model/manager.php');
+require_once('Manager.php');
 require_once('Class/Mission.php');
 require_once('Class/Statut.php');
 
-class MissionManager extends Manager
+class MissionManager
 {
     function getMissions(string $filter)
     {
-        $db = $this->dbConnect();
+
+
+         $db=Manager::dbConnect();
         if ($filter !='') {
             $filter = " WHERE title like '%$filter%'
                         OR code like '%$filter%';";
@@ -27,7 +29,8 @@ class MissionManager extends Manager
 
     function getMission(int $id)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
+        
         $sql="SELECT id ,title, descriptions, code, countryId, typeId,  
         statutId, specialityId ,startDate, endDate ,isConform
         FROM missions
@@ -43,7 +46,7 @@ class MissionManager extends Manager
 
     function writeMission($updatedMission)
      {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql = "UPDATE Missions SET 
         Missions.title ='".$updatedMission->getTitle()."',
         Missions.descriptions= '".$updatedMission->getDescriptions()."', 
@@ -66,7 +69,7 @@ class MissionManager extends Manager
 
     function postMission($newMission)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql=  "INSERT INTO Missions ( title, code,countryId,statutId, typeId, specialityId, 
         descriptions, startDate, endDate)
         Value ('".
@@ -88,7 +91,7 @@ class MissionManager extends Manager
 
     function deleteMission($id)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="DELETE FROM Missions WHERE id = ".$id.";";
 
         $req = $db->prepare($sql);
@@ -101,7 +104,7 @@ class MissionManager extends Manager
     //return in  text mission's agents
     function getAgentsFromMission($missionId)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT agentId FROM missions_agents
         WHERE missionId = ".$missionId;
 
@@ -113,7 +116,7 @@ class MissionManager extends Manager
 
     function isMissionAgent($missionId, $agentId)
     {
-        $db=$this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT agentId FROM missions_agents
         WHERE  missionId = ".$missionId." AND
             agentId= ".$agentId.";";
@@ -128,7 +131,7 @@ class MissionManager extends Manager
 
     function purgeMissionAgents($missionId)
     {
-        $db=$this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="DELETE FROM missions_agents
         WHERE missionId = ".$missionId;
         $req = $db->prepare($sql);
@@ -139,7 +142,7 @@ class MissionManager extends Manager
 
     function addAgentToMission($missionId, $agentId)
     {
-        $db=$this->dbConnect();
+        $db=Manager::dbConnect();
         $sql = "INSERT INTO missions_agents (missionId, agentId) 
         VALUES (".$missionId.",".$agentId.");";
         //echo($sql);
@@ -158,7 +161,7 @@ class MissionManager extends Manager
     //return in  text mission's targets
     function getTargetsFromMission($missionId)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT targetId FROM missions_targets
         WHERE missionId = ".$missionId;
 
@@ -170,7 +173,7 @@ class MissionManager extends Manager
 
     function isMissionTarget($missionId, $targetId)
     {
-        $db=$this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT targetId FROM missions_targets
         WHERE  missionId = ".$missionId." AND
             targetId= ".$targetId.";";
@@ -185,7 +188,7 @@ class MissionManager extends Manager
 
     function purgeMissionTargets($missionId)
     {
-        $db=$this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="DELETE FROM missions_targets
         WHERE missionId = ".$missionId;
         $req = $db->prepare($sql);
@@ -196,7 +199,7 @@ class MissionManager extends Manager
 
     function addTargetToMission($missionId, $targetId)
     {
-        $db=$this->dbConnect();
+        $db=Manager::dbConnect();
         $sql = "INSERT INTO missions_targets (missionId, targetId) 
         VALUES (".$missionId.",".$targetId.");";
         //echo($sql);
@@ -213,7 +216,7 @@ class MissionManager extends Manager
     //return in  text mission's contacts
     function getContactsFromMission($missionId)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT contactId FROM missions_contacts
         WHERE missionId = ".$missionId;
 
@@ -225,12 +228,12 @@ class MissionManager extends Manager
 
     function isMissionContact($missionId, $contactId)
     {
-        $db=$this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT contactId FROM missions_contacts
         WHERE  missionId = ".$missionId." AND
             contactId= ".$contactId.";";
 
-        var_dump($sql);
+        //var_dump($sql);
         
         $req = $db->prepare($sql);
         $req->execute();
@@ -240,7 +243,7 @@ class MissionManager extends Manager
 
     function purgeMissionContacts($missionId)
     {
-        $db=$this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="DELETE FROM missions_contacts
         WHERE missionId = ".$missionId;
         $req = $db->prepare($sql);
@@ -251,7 +254,7 @@ class MissionManager extends Manager
 
     function addContactToMission($missionId, $contactId)
     {
-        $db=$this->dbConnect();
+        $db=Manager::dbConnect();
         $sql = "INSERT INTO missions_contacts (missionId, contactId) 
         VALUES (".$missionId.",".$contactId.");";
         //echo($sql);
@@ -271,7 +274,7 @@ class MissionManager extends Manager
     //return in  text mission's hideaways
     function getHideawaysFromMission($missionId)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT hideawayId FROM missions_hideaways
         WHERE missionId = ".$missionId;
 
@@ -283,12 +286,10 @@ class MissionManager extends Manager
 
     function isMissionHideaway($missionId, $hideawayId)
     {
-        $db=$this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT hideawayId FROM missions_hideaways
         WHERE  missionId = ".$missionId." AND
             hideawayId= ".$hideawayId.";";
-
-        var_dump($sql);
         
         $req = $db->prepare($sql);
         $req->execute();
@@ -298,7 +299,7 @@ class MissionManager extends Manager
 
     function purgeMissionHideaways($missionId)
     {
-        $db=$this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="DELETE FROM missions_hideaways
         WHERE missionId = ".$missionId;
         $req = $db->prepare($sql);
@@ -309,7 +310,7 @@ class MissionManager extends Manager
 
     function addHideawayToMission($missionId, $hideawayId)
     {
-        $db=$this->dbConnect();
+        $db=Manager::dbConnect();
         $sql = "INSERT INTO missions_hideaways (missionId, hideawayId) 
         VALUES (".$missionId.",".$hideawayId.");";
         //echo($sql);
@@ -319,6 +320,5 @@ class MissionManager extends Manager
         return $req;
     }
 
-// ________________end of hideaways management___________________________________
-
+// ________________end of hideaways management________________
 }

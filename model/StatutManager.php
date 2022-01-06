@@ -1,13 +1,13 @@
 <?php
 
-require_once('model/manager.php');
-require_once('Class/type.php');
+require_once('Manager.php');
+require_once('Class/Type.php');
 
 class StatutManager extends Manager
 {
     function getStatuts()
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT statuts.id, statuts.statut
         FROM statuts";
         $req = $db->prepare($sql);
@@ -17,7 +17,7 @@ class StatutManager extends Manager
 
     function getStatut(int $id)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         if(!isset($id)){
             $id=$_GET['id'];
         }
@@ -35,7 +35,7 @@ class StatutManager extends Manager
 
     function writeType($updatedtype)
      {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql = "UPDATE types SET 
         types.type ='".$updatedtype->getType()."'
         WHERE types.id = ?";
@@ -50,7 +50,7 @@ class StatutManager extends Manager
 
     function postType($newtype)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql=  "INSERT INTO types ( type)
         Value ('".$newtype->getType()."');'";
 
@@ -62,7 +62,7 @@ class StatutManager extends Manager
 
     function deletetype($id)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="DELETE FROM types WHERE id = ".$id.";";
 
         $req = $db->prepare($sql);

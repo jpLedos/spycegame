@@ -1,13 +1,13 @@
 <?php
 
-require_once('model/manager.php');
+require_once('Manager.php');
 require_once('Class/Agent.php');
 
 class AgentManager extends Manager
 {
     function getAgents()
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT Agents.id, Agents.lastname,Agents.firstname, Agents.code, Agents.isDead,
         Agents.countryId, Agents.isConform
         FROM Agents";
@@ -22,7 +22,7 @@ class AgentManager extends Manager
         if(!isset($id)){
             $id= $_GET['id'];
         }
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT Agents.id, Agents.lastname,Agents.firstname, Agents.code, Agents.isDead,
         Agents.countryId, Agents.dateOfBirth, Agents.isConform
         FROM Agents
@@ -37,7 +37,7 @@ class AgentManager extends Manager
 
     function writeAgent($updatedAgent)
      {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql = "UPDATE Agents SET 
         Agents.lastname ='".$updatedAgent->getLastName()."',
         Agents.firstname= '".$updatedAgent->getFirstname()."', 
@@ -57,7 +57,7 @@ class AgentManager extends Manager
 
     function postAgent($newAgent)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql=  "INSERT INTO Agents ( lastname, firstname,code, countryId, isDead, isConform, dateOfBirth)
         Value ('".
         $newAgent->getLastName()."','".
@@ -76,7 +76,7 @@ class AgentManager extends Manager
 
     function deleteAgent($id)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="DELETE FROM Agents WHERE id = ".$id.";";
 
         $req = $db->prepare($sql);
@@ -88,7 +88,7 @@ class AgentManager extends Manager
     //retourne en texte les specialités de l'agent
     function getSpecialitiesFromAgent($agentId)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT specialityId, speciality  FROM agents_specialities
         INNER JOIN specialities
         ON agents_specialities.specialityId = specialities.id
@@ -140,7 +140,7 @@ class AgentManager extends Manager
      //retourne en texte les missions de l'agent
      function getMissionsFromAgent($agentId)
      {
-         $db = $this->dbConnect();
+         $db=Manager::dbConnect();
          $sql="SELECT missionId, title  FROM missions_agents
          INNER JOIN missions
          ON missions_agents.missionId = missions.id

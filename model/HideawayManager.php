@@ -1,13 +1,13 @@
 <?php
 
-require_once('model/manager.php');
+require_once('Manager.php');
 require_once('Class/Hideaway.php');
 
 class HideawayManager extends Manager
 {
     function getHideaways()
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT Hideaways.id, Hideaways.code,Hideaways.address, 
         Hideaways.hideawayTypeId , Hideaways.countryId
         FROM Hideaways";
@@ -21,7 +21,7 @@ class HideawayManager extends Manager
         if(!isset($id)){
             $id=$_GET['id'];
         }
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT Hideaways.id, Hideaways.code,Hideaways.address, 
         Hideaways.hideawayTypeId , Hideaways.countryId
         FROM Hideaways
@@ -38,7 +38,7 @@ class HideawayManager extends Manager
 
     function writeHideaway($updatedHideaway)
      {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql = "UPDATE Hideaways SET 
         Hideaways.code ='".$updatedHideaway->getCode()."',
         Hideaways.Address= '".$updatedHideaway->getAddress()."', 
@@ -55,7 +55,7 @@ class HideawayManager extends Manager
 
     function postHideaway($newHideaway)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql=  "INSERT INTO Hideaways ( code, address, countryId, hideawayTypeId )
         Value ('".
         $newHideaway->getCode()."','".
@@ -71,7 +71,7 @@ class HideawayManager extends Manager
 
     function deleteHideaway($id)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="DELETE FROM Hideaways WHERE id = ".$id.";";
 
         $req = $db->prepare($sql);
@@ -83,7 +83,7 @@ class HideawayManager extends Manager
          //retourne en texte les missions de l'agent
          function getMissionsFromHideaway($hideawayId)
          {
-             $db = $this->dbConnect();
+             $db=Manager::dbConnect();
              $sql="SELECT missionId, title  FROM missions_hideaways
              INNER JOIN missions
              ON missions_hideaways.missionId = missions.id

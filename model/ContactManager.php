@@ -1,13 +1,13 @@
 <?php
 
-require_once('model/manager.php');
+require_once('Manager.php');
 require_once('Class/Contact.php');
 
 class ContactManager extends Manager
 {
     function getContacts()
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT Contacts.id, Contacts.lastname,Contacts.firstname, Contacts.code, Contacts.isDead,
         Contacts.countryId
         FROM Contacts";
@@ -21,7 +21,7 @@ class ContactManager extends Manager
         if(!isset($id)){
             $id=$_GET['id'];
         }
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT Contacts.id, Contacts.lastname,Contacts.firstname, Contacts.code, Contacts.isDead,
         Contacts.countryId, Contacts.dateOfBirth
         FROM Contacts
@@ -38,7 +38,7 @@ class ContactManager extends Manager
 
     function writeContact($updatedContact)
      {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql = "UPDATE Contacts SET 
         Contacts.lastname ='".$updatedContact->getLastName()."',
         Contacts.firstname= '".$updatedContact->getFirstname()."', 
@@ -58,7 +58,7 @@ class ContactManager extends Manager
 
     function postContact($newContact)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql=  "INSERT INTO Contacts ( lastname, firstname,code, countryId, isDead, dateOfBirth)
         Value ('".
         $newContact->getLastName()."','".
@@ -77,7 +77,7 @@ class ContactManager extends Manager
 
     function deleteContact($id)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="DELETE FROM Contacts WHERE id = ".$id.";";
 
         $req = $db->prepare($sql);
@@ -89,7 +89,7 @@ class ContactManager extends Manager
          //retourne en texte les missions du contact
          function getMissionsFromContact($contactId)
          {
-             $db = $this->dbConnect();
+             $db=Manager::dbConnect();
              $sql="SELECT missionId, title  FROM missions_contacts
              INNER JOIN missions
              ON missions_contacts.missionId = missions.id

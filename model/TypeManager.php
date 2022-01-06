@@ -1,13 +1,13 @@
 <?php
 
-require_once('model/manager.php');
-require_once('Class/type.php');
+require_once('Manager.php');
+require_once('Class/Type.php');
 
 class typeManager extends Manager
 {
     function getTypes()
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT types.id, types.type
         FROM types";
         $req = $db->prepare($sql);
@@ -17,7 +17,7 @@ class typeManager extends Manager
 
     function getType(int $id)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         if(!isset($id)){
             $id=$_GET['id'];
         }
@@ -36,7 +36,7 @@ class typeManager extends Manager
 
     function writeType($updatedtype)
      {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql = "UPDATE types SET 
         types.type ='".$updatedtype->getType()."'
         WHERE types.id = ?";
@@ -51,7 +51,7 @@ class typeManager extends Manager
 
     function postType($newtype)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql=  "INSERT INTO types ( type)
         Value ('".$newtype->getType()."');'";
         echo($sql);
@@ -64,7 +64,7 @@ class typeManager extends Manager
 
     function deletetype($id)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="DELETE FROM types WHERE id = ".$id.";";
 
         $req = $db->prepare($sql);
@@ -78,7 +78,7 @@ class typeManager extends Manager
     //retourne en texte les missions de  ce type
     function getMissionsFromType($typeId)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT typeId, title  FROM missions
         WHERE typeId = ".$typeId;
 

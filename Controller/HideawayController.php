@@ -17,7 +17,7 @@ function showHideaway(int $id)
     $HideawayManager = new HideawayManager(); 
     $showHideaway = $HideawayManager->getHideaway($id);
     $hideawayMissions = $HideawayManager->getMissionsFromHideaway($id); 
-    require('view/Hideaway/showHideaway.php');
+    require('view/hideaway/showHideaway.php');
 }
 
 function editHideaway(int $id)
@@ -25,12 +25,12 @@ function editHideaway(int $id)
     $HideawayManager = new HideawayManager(); 
     $showHideaway = $HideawayManager->getHideaway($id); 
     $hideawayMissions = $HideawayManager->getMissionsFromHideaway($id);
-    require('view/Hideaway/editHideaway.php');
+    require('view/hideaway/editHideaway.php');
 }
 
 function newHideaway()
 {
-    require('view/Hideaway/newHideaway.php');
+    require('view/hideaway/newHideaway.php');
 }
 
 function deleteHideaway(int $id)

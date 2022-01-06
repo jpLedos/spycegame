@@ -1,13 +1,13 @@
 <?php
 
-require_once('model/manager.php');
+require_once('Manager.php');
 require_once('Class/Speciality.php');
 
 class SpecialityManager extends Manager
 {
     function getSpecialities()
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT Specialities.id, Specialities.speciality
         FROM Specialities";
         $req = $db->prepare($sql);
@@ -20,7 +20,7 @@ class SpecialityManager extends Manager
         if(!isset($id)){
             $id = $_GET['id'];
         }
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="SELECT Specialities.id, Specialities.speciality
         FROM Specialities
         WHERE Specialities.id = ?";
@@ -36,7 +36,7 @@ class SpecialityManager extends Manager
 
     function writeSpeciality($updatedSpeciality)
      {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql = "UPDATE Specialities SET 
         specialities.speciality ='".$updatedSpeciality->getSpeciality()."'
         WHERE specialities.id = ?";
@@ -50,7 +50,7 @@ class SpecialityManager extends Manager
 
     function postSpeciality($newSpeciality)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql=  "INSERT INTO Specialities ( speciality)
         Value ('".
         $newSpeciality->getSpeciality()."');'";
@@ -63,7 +63,7 @@ class SpecialityManager extends Manager
 
     function deleteSpeciality($id)
     {
-        $db = $this->dbConnect();
+        $db=Manager::dbConnect();
         $sql="DELETE FROM specialities WHERE id = ".$id.";";
 
         $req = $db->prepare($sql);
@@ -75,7 +75,7 @@ class SpecialityManager extends Manager
         //retourne en texte les missions de la specialité
         function getMissionsFromSpeciality($specialityId)
         {
-            $db = $this->dbConnect();
+            $db=Manager::dbConnect();
             $sql="SELECT specialityId, title  FROM missions
             WHERE specialityId = ".$specialityId;
     
@@ -89,7 +89,7 @@ class SpecialityManager extends Manager
              //retourne en texte les missions de l'agent
      function getAgentsFromspeciality($specialityId)
      {
-         $db = $this->dbConnect();
+         $db=Manager::dbConnect();
          $sql="SELECT agentId, lastname, firstname FROM agents_specialities
          INNER JOIN agents
          ON agents_specialities.agentId = agents.id
